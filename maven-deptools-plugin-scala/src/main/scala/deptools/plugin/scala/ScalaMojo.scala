@@ -1,6 +1,9 @@
 package deptools.plugin.scala
 
-import org.apache.maven.plugin.AbstractMojo
+import org.apache.maven.project.MavenProject
+import org.apache.maven.execution.MavenSession
+import org.apache.maven.plugin.{PluginManager, AbstractMojo}
+import org.twdata.maven.mojoexecutor.MojoExecutor._
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,17 +13,50 @@ import org.apache.maven.plugin.AbstractMojo
  * To change this template use File | Settings | File Templates.
  */
 
-class ScalaMojo extends AbstractMojo{
+abstract class ScalaMojo extends AbstractMojo {
+  private var _testString: String = null
 
-  private var testString : String = null
+  private var _project: MavenProject = null
+  private var _session: MavenSession = null
 
-  def setTestString(v : String) = testString = v
-  def getTestString() = testString
+  def setTestString(v: String) = _testString = v
+
+  def setProject(project: MavenProject) = _project = project
+
+  def setSession(session: MavenSession) = _session = session
+
+  def getPluginManager():PluginManager
 
 
   def execute = {
-    getLog.info("from scala!!")
-    getLog.info("testString: " + testString)
 
+    try {
+
+      val pm = getPluginManager()
+
+      getLog.info("from scala!!")
+      getLog.info("testString: " + _testString)
+
+      executeMojo(
+        plugin(
+          groupId("org.apache.maven.plugins"),
+          artifactId("maven-dependency-plugin"),
+          version("2.0")
+          ),
+        goal("tree"),
+        configuration(
+          element(name("outputDirectory"), "${project.build.directory}/foo")
+          )
+        ,
+        executionEnvironment(
+          _project,
+          _session,
+          pm
+          )
+        )
+
+    } catch {
+      case unknown => getLog.error(unknown)
+    }
   }
 }

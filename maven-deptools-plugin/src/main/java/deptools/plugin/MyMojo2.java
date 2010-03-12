@@ -11,19 +11,16 @@ import org.apache.maven.project.MavenProject;
 
 /**
  * Goal which touches a timestamp file.
- *
+ * <p/>
  * set aggregator-annotation to make our plugin only execute once when building
  * project with modules..
  *
  * @aggregator true
- *
  * @goal check2
- *
  * @phase process-sources
  */
 public class MyMojo2
-    extends ScalaMojo
-{
+        extends ScalaMojo {
     /**
      * Ok - so here is how I got this to work..
      * The mojo is implemented in scala, but the plugin:descriptor cannot
@@ -45,11 +42,40 @@ public class MyMojo2
     /**
      * The Maven Project Object
      *
-     * @parameter expression="${testString}"
+     * @parameter expression="${testString}" default-value=""
      * @required
      * @readonly
      */
     protected String testString;
 
-    
+    /**
+     * The Maven Project Object
+     *
+     * @parameter expression="${project}"
+     * @required
+     * @readonly
+     */
+    protected MavenProject project;
+
+    /**
+     * The Maven Session Object
+     *
+     * @parameter expression="${session}"
+     * @required
+     * @readonly
+     */
+    protected MavenSession session;
+
+    /**
+     * The Maven PluginManager Object
+     *
+     * @component
+     * @required
+     */
+    protected PluginManager pluginManager;
+
+    @Override
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
 }
