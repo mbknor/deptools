@@ -18,6 +18,7 @@ package deptools.plugin;
 
 import deptools.plugin.integration.DeptoolsExecutor;
 import deptools.plugin.scala.DoStuff;
+import deptools.plugin.scala.ScalaMojo;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -37,23 +38,16 @@ import org.apache.maven.project.MavenProject;
  * @phase process-sources
  */
 public class MyMojo2
-    extends AbstractMojo
+    extends ScalaMojo
 {
     /**
      * The Maven Project Object
      *
-     * @parameter expression="${testString}" default-value="default-value"
+     * @parameter expression="${testString}"
      * @required
      * @readonly
      */
     protected String testString;
 
-    public void execute()
-        throws MojoExecutionException
-    {
-
-        getLog().info("-------> testString: " + testString);
-
-       
-    }
+    
 }
