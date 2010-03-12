@@ -1,21 +1,5 @@
 package deptools.plugin;
 
-/*
- * Copyright 2001-2005 The Apache Software Foundation.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 import deptools.plugin.integration.DeptoolsExecutor;
 import deptools.plugin.scala.DoStuff;
 import deptools.plugin.scala.ScalaMojo;
@@ -40,6 +24,24 @@ import org.apache.maven.project.MavenProject;
 public class MyMojo2
     extends ScalaMojo
 {
+    /**
+     * Ok - so here is how I got this to work..
+     * The mojo is implemented in scala, but the plugin:descriptor cannot
+     * parse the javadoc annotations from the scala file..
+     *
+     * therefor I have this java class that extends the scala class.
+     *
+     * the scala class have the methods setTestString() and getTestString()
+     *
+     * this java class has a protected property testString, which we
+     * can write the mojo annotation on.
+     *
+     * but when the plugin is launched, and maven uses reflection to set the value
+     * of the property, the scala setter is called..
+     *
+     * short: we annotate on fake/unused property in java, but the code is in scala
+     */
+
     /**
      * The Maven Project Object
      *
