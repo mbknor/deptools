@@ -24,10 +24,6 @@ import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  * Goal which touches a timestamp file.
  *
@@ -36,44 +32,28 @@ import java.io.IOException;
  *
  * @aggregator true
  *
- * @goal check
- * 
+ * @goal check2
+ *
  * @phase process-sources
  */
-public class MyMojo
+public class MyMojo2
     extends AbstractMojo
 {
     /**
      * The Maven Project Object
      *
-     * @parameter expression="${project}"
+     * @parameter expression="${testString}" default-value="default-value"
      * @required
      * @readonly
      */
-    protected MavenProject project;
-
-    /**
-     * The Maven Session Object
-     *
-     * @parameter expression="${session}"
-     * @required
-     * @readonly
-     */
-    protected MavenSession session;
-
-    /**
-     * The Maven PluginManager Object
-     *
-     * @component
-     * @required
-     */
-    protected PluginManager pluginManager;
+    protected String testString;
 
     public void execute()
         throws MojoExecutionException
     {
 
-        DeptoolsExecutor executor = new DoStuff();
-        executor.execute();
+        getLog().info("-------> testString: " + testString);
+
+       
     }
 }
