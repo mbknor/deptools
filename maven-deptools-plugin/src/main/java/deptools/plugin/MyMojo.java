@@ -16,6 +16,8 @@ package deptools.plugin;
  * limitations under the License.
  */
 
+import deptools.plugin.integration.DeptoolsExecutor;
+import deptools.plugin.scala.DoStuff;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 
@@ -43,6 +45,10 @@ public class MyMojo
     public void execute()
         throws MojoExecutionException
     {
+
+        DeptoolsExecutor executor = new DoStuff();
+        executor.execute();
+
         File f = outputDirectory;
 
         if ( !f.exists() )
