@@ -39,11 +39,7 @@
     </pluginRepositories>
 
     <dependencies>
-        <dependency>
-            <groupId>deptools.plugin</groupId>
-            <artifactId>maven-deptools-plugin-integration</artifactId>
-            <version>${pom.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>

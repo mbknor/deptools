@@ -1,11 +1,7 @@
 package deptools.plugin;
 
-import deptools.plugin.integration.DeptoolsExecutor;
-import deptools.plugin.scala.DoStuff;
 import deptools.plugin.scala.ScalaMojo;
 import org.apache.maven.execution.MavenSession;
-import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
 
