@@ -78,4 +78,15 @@ public class MyMojo2
     public PluginManager getPluginManager() {
         return pluginManager;
     }
+
+
+
+    /**
+     * The Maven Session Object
+     *
+     * @parameter expression="${project.build.directory}"
+     * @required
+     * @readonly
+     */
+    protected String buildDir;
 }

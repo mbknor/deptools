@@ -19,44 +19,52 @@ abstract class ScalaMojo extends AbstractMojo {
   private var _project: MavenProject = null
   private var _session: MavenSession = null
 
+  private var _buildDir: String = null
+  private val depTreeFilename = "/dependency_tree/dependency_tree.txt"
+
   def setTestString(v: String) = _testString = v
 
   def setProject(project: MavenProject) = _project = project
 
   def setSession(session: MavenSession) = _session = session
 
-  def getPluginManager():PluginManager
+  def getPluginManager(): PluginManager
 
+  def setBuildDir(dir: String) = _buildDir = dir
+
+
+  override def getLog = {
+    super.getLog
+  }
 
   def execute = {
 
-    try {
+    executeDepTree()
 
-      val pm = getPluginManager()
 
-      getLog.info("from scala!!")
-      getLog.info("testString: " + _testString)
+  }
 
-      executeMojo(
-        plugin(
-          groupId("org.apache.maven.plugins"),
-          artifactId("maven-dependency-plugin"),
-          version("2.0")
-          ),
-        goal("tree"),
-        configuration(
-          element(name("outputDirectory"), "${project.build.directory}/foo")
-          )
-        ,
-        executionEnvironment(
-          _project,
-          _session,
-          pm
-          )
+  def executeDepTree() {
+    val pm = getPluginManager()
+    
+    executeMojo(
+      plugin(
+        groupId("org.apache.maven.plugins"),
+        artifactId("maven-dependency-plugin"),
+        version("2.0")
+        ),
+      goal("tree"),
+      configuration(
+        element(name("outputFile"), "${project.build.directory}" + depTreeFilename),
+        element(name("verbose"), "true")
         )
+      ,
+      executionEnvironment(
+        _project,
+        _session,
+        pm
+        )
+      )
 
-    } catch {
-      case unknown => getLog.error(unknown)
-    }
   }
 }
