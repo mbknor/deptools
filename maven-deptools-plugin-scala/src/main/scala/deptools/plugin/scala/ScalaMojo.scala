@@ -4,6 +4,8 @@ import org.apache.maven.project.MavenProject
 import org.apache.maven.execution.MavenSession
 import org.apache.maven.plugin.{PluginManager, AbstractMojo}
 import org.twdata.maven.mojoexecutor.MojoExecutor._
+import java.io.{FileReader, BufferedReader}
+import collection.mutable.ListBuffer
 
 /**
  * Created by IntelliJ IDEA.
@@ -37,11 +39,37 @@ abstract class ScalaMojo extends AbstractMojo {
     super.getLog
   }
 
-  def execute = {
+  def execute  {
 
     executeDepTree()
+    val lines = readDepTreeOutput()
 
+    lines.foreach{
+      x => println("___________:> " + x)
+    }
 
+    return
+  }
+
+  def outputFilename = _buildDir + depTreeFilename
+
+  def readDepTreeOutput(): List[String]={
+    val lines = new ListBuffer[String]
+    var in : BufferedReader = null
+    try{
+      in = new BufferedReader( new FileReader(outputFilename))
+      var line : String = null
+      while( {line = in.readLine; line != null}){
+        lines += line
+      }
+      return lines.toList
+    }finally{
+      try{
+        in.close
+      }catch{
+        case unknown => None
+      }
+    }
   }
 
   def executeDepTree() {
