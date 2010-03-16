@@ -1,0 +1,4 @@
+com.kjetland:deptools-testproject1:jar:1.0-SNAPSHOT
++- commons-logging:commons-logging:jar:1.0.1:compile
+\- org.springframework.:spring-core:jar:2.5.6.SEC01:compile
+   \- (commons-logging:commons-logging:jar:1.1.1:compile - omitted for conflict with 1.0.1)

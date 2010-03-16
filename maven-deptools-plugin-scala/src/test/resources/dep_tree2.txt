@@ -1,0 +1,108 @@
+deptools.plugin:maven-deptools-plugin-scala:jar:1.0-SNAPSHOT
++- org.scala-lang:scala-library:jar:2.7.7:compile
++- org.scala-lang:scala-compiler:jar:2.7.7:provided
+|  \- (org.scala-lang:scala-library:jar:2.7.7:provided - omitted for duplicate)
++- junit:junit:jar:4.4:test (scope not updated to compile)
++- org.specs:specs:jar:1.2.5:test
+|  +- (junit:junit:jar:4.4:test - omitted for duplicate)
+|  +- org.scalatest:scalatest:jar:0.9.1:test
+|  +- org.scalacheck:scalacheck:jar:1.2:test
+|  \- org.jmock:jmock:jar:2.4.0:test
+|     +- org.hamcrest:hamcrest-core:jar:1.1:test
+|     \- org.hamcrest:hamcrest-library:jar:1.1:test
+|        \- (org.hamcrest:hamcrest-core:jar:1.1:test - omitted for duplicate)
++- org.easymock:easymockclassextension:jar:2.5.2:test
+|  +- org.easymock:easymock:jar:2.5.2:test
+|  +- cglib:cglib-nodep:jar:2.2:test
+|  \- org.objenesis:objenesis:jar:1.2:test
+\- org.twdata.maven:mojo-executor:jar:0.1:compile
+   +- org.apache.maven:maven-core:jar:2.0.9:compile
+   |  +- org.apache.maven:maven-settings:jar:2.0.9:compile
+   |  |  +- (org.apache.maven:maven-model:jar:2.0.9:compile - omitted for duplicate)
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   |  +- org.apache.maven.wagon:wagon-file:jar:1.0-beta-2:runtime
+   |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  +- org.apache.maven:maven-plugin-parameter-documenter:jar:2.0.9:compile
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   |  +- org.apache.maven.wagon:wagon-webdav:jar:1.0-beta-2:runtime
+   |  |  +- slide:slide-webdavlib:jar:2.1:runtime
+   |  |  |  +- commons-httpclient:commons-httpclient:jar:2.0.2:runtime
+   |  |  |  |  \- (commons-logging:commons-logging:jar:1.0.3:runtime - omitted for conflict with 1.0.4)
+   |  |  |  +- jdom:jdom:jar:1.0:runtime
+   |  |  |  \- de.zeigermann.xml:xml-im-exporter:jar:1.1:runtime
+   |  |  +- commons-logging:commons-logging:jar:1.0.4:runtime
+   |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  +- org.apache.maven.wagon:wagon-http-lightweight:jar:1.0-beta-2:runtime
+   |  |  +- org.apache.maven.wagon:wagon-http-shared:jar:1.0-beta-2:runtime
+   |  |  |  +- jtidy:jtidy:jar:4aug2000r7-dev:runtime
+   |  |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  |  +- xml-apis:xml-apis:jar:1.0.b2:runtime
+   |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  +- org.apache.maven.reporting:maven-reporting-api:jar:2.0.9:compile
+   |  |  \- org.apache.maven.doxia:doxia-sink-api:jar:1.0-alpha-10:compile
+   |  +- org.apache.maven:maven-profile:jar:2.0.9:compile
+   |  |  +- (org.apache.maven:maven-model:jar:2.0.9:compile - omitted for duplicate)
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-model:jar:2.0.9:compile - omitted for duplicate)
+   |  +- org.apache.maven:maven-artifact:jar:2.0.9:compile
+   |  |  \- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  +- org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:compile
+   |  |  \- (org.codehaus.plexus:plexus-utils:jar:1.0.4:compile - omitted for conflict with 1.5.1)
+   |  +- org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile
+   |  |  +- (junit:junit:jar:3.8.1:compile - omitted for conflict with 4.4)
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.0.4:compile - omitted for conflict with 1.5.1)
+   |  |  \- (classworlds:classworlds:jar:1.1-alpha-2:compile - omitted for conflict with 1.1)
+   |  +- org.apache.maven:maven-repository-metadata:jar:2.0.9:compile
+   |  |  \- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  +- org.apache.maven:maven-error-diagnostics:jar:2.0.9:compile
+   |  |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-project:jar:2.0.9:compile - omitted for duplicate)
+   |  +- commons-cli:commons-cli:jar:1.0:compile
+   |  +- (org.apache.maven:maven-plugin-api:jar:2.0.9:compile - omitted for duplicate)
+   |  +- org.apache.maven.wagon:wagon-ssh-external:jar:1.0-beta-2:runtime
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.0.4:runtime - omitted for conflict with 1.5.1)
+   |  |  +- org.apache.maven.wagon:wagon-ssh-common:jar:1.0-beta-2:runtime
+   |  |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.0.4:runtime - omitted for conflict with 1.5.1)
+   |  |  |  +- (org.codehaus.plexus:plexus-interactivity-api:jar:1.0-alpha-4:runtime - omitted for duplicate)
+   |  |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  +- (org.apache.maven:maven-plugin-descriptor:jar:2.0.9:compile - omitted for duplicate)
+   |  +- org.codehaus.plexus:plexus-interactivity-api:jar:1.0-alpha-4:compile
+   |  |  \- (classworlds:classworlds:jar:1.1-alpha-2:compile - omitted for duplicate)
+   |  +- org.apache.maven:maven-artifact-manager:jar:2.0.9:compile
+   |  |  +- (org.apache.maven:maven-repository-metadata:jar:2.0.9:compile - omitted for duplicate)
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  |  +- (org.apache.maven:maven-artifact:jar:2.0.9:compile - omitted for duplicate)
+   |  |  +- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:compile - omitted for duplicate)
+   |  +- org.apache.maven:maven-monitor:jar:2.0.9:compile
+   |  +- org.apache.maven.wagon:wagon-ssh:jar:1.0-beta-2:runtime
+   |  |  +- com.jcraft:jsch:jar:0.1.27:runtime
+   |  |  +- (org.codehaus.plexus:plexus-interactivity-api:jar:1.0-alpha-4:runtime - omitted for duplicate)
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.0.4:runtime - omitted for conflict with 1.5.1)
+   |  |  +- (org.apache.maven.wagon:wagon-ssh-common:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  |  \- (org.apache.maven.wagon:wagon-provider-api:jar:1.0-beta-2:runtime - omitted for duplicate)
+   |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  \- classworlds:classworlds:jar:1.1:compile
+   +- org.apache.maven:maven-model:jar:2.0.9:compile
+   |  \- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   +- org.apache.maven:maven-plugin-descriptor:jar:2.0.9:compile
+   |  +- (org.apache.maven:maven-plugin-api:jar:2.0.9:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-artifact:jar:2.0.9:compile - omitted for duplicate)
+   |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   +- org.apache.maven:maven-project:jar:2.0.9:compile
+   |  +- (org.apache.maven:maven-settings:jar:2.0.9:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-profile:jar:2.0.9:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-model:jar:2.0.9:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-artifact-manager:jar:2.0.9:compile - omitted for duplicate)
+   |  +- org.apache.maven:maven-plugin-registry:jar:2.0.9:compile
+   |  |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   |  +- (org.codehaus.plexus:plexus-utils:jar:1.5.1:compile - omitted for duplicate)
+   |  +- (org.apache.maven:maven-artifact:jar:2.0.9:compile - omitted for duplicate)
+   |  \- (org.codehaus.plexus:plexus-container-default:jar:1.0-alpha-9-stable-1:compile - omitted for duplicate)
+   +- org.apache.maven:maven-plugin-api:jar:2.0.9:compile
+   \- org.codehaus.plexus:plexus-utils:jar:1.5.1:compile
