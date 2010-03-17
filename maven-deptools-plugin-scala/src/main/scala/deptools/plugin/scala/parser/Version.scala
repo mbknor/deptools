@@ -20,7 +20,7 @@ class IntVersionPart(val intValue: Int) extends VersionPart {
   def compareTo(other: VersionPart) : Int = {
     other match {
       case o : IntVersionPart  => return intValue compare o.intValue
-      case _ => return 1 //all other than int is larger by def
+      case _ => return -1 //all other than int is larger by def
       
     }
   }
@@ -30,7 +30,7 @@ class StringVersionPart(val stringValue: String) extends VersionPart {
   def compareTo(other: VersionPart) : Int = {
     other match {
       case o : StringVersionPart => return stringValue compare o.stringValue
-      case _ => return -1 //all other than int is smaller by def
+      case _ => return 1 //all other than int is smaller by def
 
     }
   }
@@ -53,8 +53,9 @@ object VersionPartParser {
 
 class Version(version: String) {
   private val parts = new ListBuffer[VersionPart]
-  //must parse the versionString into parts devided by .
-  version.split("\\:").foreach {
+  //must parse the versionString into parts devided by . or -
+  //this will handle most maven version i've seen up to now..
+  version.split("[\\.-]").foreach {
     parts += VersionPartParser.parse(_)
   }
 
@@ -67,8 +68,8 @@ class Version(version: String) {
       if( c != 0 ) return c
     }
     //all partst to this point have been equal - must decide on partsSize..
-    if( other.parts.size > parts.size ) return 1
-    if( other.parts.size < parts.size ) return -1
+    if( other.parts.size > parts.size ) return -1
+    if( other.parts.size < parts.size ) return 1
 
     //equal
     return 0
