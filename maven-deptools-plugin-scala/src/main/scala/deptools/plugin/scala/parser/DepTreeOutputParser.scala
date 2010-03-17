@@ -1,6 +1,7 @@
 package deptools.plugin.scala.parser
 
-import collection.mutable.{Queue, ListBuffer}
+import deptools.plugin.scala.utils.MyLogger
+import collection.mutable.{HashMap, Queue, ListBuffer}
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,11 +17,22 @@ class Dependency(
         val packaging: String,
         val version: String,
         val scope: String) {
-  override def toString = "dep: groupId: '" + groupId + "' artifactId: '" + artifactId + "' packaging: '" + packaging + "' version: '" + version + "' scope: '" + scope+"'"
+
+  def key = groupId + ":" + artifactId
+
+
+  override def toString = groupId + ":" + artifactId + ":" + ":" + version
+
+  def extendedToString = "dep: groupId: '" + groupId + "' artifactId: '" + artifactId + "' packaging: '" + packaging + "' version: '" + version + "' scope: '" + scope+"'"
 }
 
-object DepTreeOutputParser {
+class DepTreeOutputParser(logger: MyLogger) {
+
+  val dependencies = new HashMap[String, Dependency]
+
   def parse(linesLeft: Queue[String]) {
+    //pop first line from queue - it only contains the name for the processed maven project
+    linesLeft.dequeue
     parse(linesLeft, new collection.immutable.Queue[Dependency](), 1)
   }
 
@@ -68,7 +80,9 @@ object DepTreeOutputParser {
             //pop the line from the queue
             linesLeft.dequeue;
             var dependency = parseDep(parents, depString)
-            println(parents.size + " > " + "dependency: " + dependency)
+
+            dependencies.update(dependency.key, dependency)
+            //println(parents.size + " > " + "dependency: " + dependency)
 
             previousDependency = dependency;
           }
@@ -77,7 +91,7 @@ object DepTreeOutputParser {
         case _ => {
           //line did not match any regexp.. just pop the line
           linesLeft.dequeue;
-          //println("ignoring line: " + line)
+          logger.debug("ignoring line: " + line)
         }
       }
     }
@@ -95,7 +109,7 @@ object DepTreeOutputParser {
     depString match {
       case errorArtifactExpression( gid, aid, t, v, scope, errorMsg ) => {
         val dependency = new Dependency(gid, aid, t, v, scope)
-        handleError( parents, dependency, errorMsg)
+        handleError( parents enqueue dependency, errorMsg)
         return dependency
       }
       case okArtifactExpression(gid, aid, t, v, scope) => {
@@ -107,7 +121,56 @@ object DepTreeOutputParser {
     }
   }
 
-  private def handleError( parents: collection.immutable.Queue[Dependency], dependency : Dependency, errorMsg : String) {
-    println( "errormsg: "+ errorMsg)
+  private def handleError( dependencyHierarchy: collection.immutable.Queue[Dependency], errorMsg : String) {
+    val duplicateExpr = "omitted for duplicate".r
+    val omittedExpr = "omitted for conflict with (.+)".r
+    errorMsg match {
+      case omittedExpr(version) => {
+        handleOmittedError( dependencyHierarchy, version )
+      }
+      case duplicateExpr() => {
+        //ignoring
+        logger.debug("ignoring error: " + errorMsg + " for dependency: " + dependencyHierarchy.last);
+      }
+      case _ => {
+        logger.debug("unknown error: " + errorMsg + " for dependency: " + dependencyHierarchy.last);
+      }
+    }
+  }
+
+  private def handleOmittedError( dependencyHierarchy: collection.immutable.Queue[Dependency], version : String ){
+
+    //get the last element from dependencyHierarchy - this is the dependency that is excluded
+    val lastDep = dependencyHierarchy.last
+
+    logger.debug("The dependnecy '"+lastDep+"' is omitted since artifact is already included with version '"+version+"'")
+
+    //find existing occurance of this dependency
+    dependencies.get( lastDep.key) match {
+      case Some(dep ) => {
+        //logger.debug("refered dep: " + dep)
+
+        //check if omitted version is older than included one.
+        val thisVersion = new Version( lastDep.version)
+        val existingVersion = new Version( dep.version )
+        if( thisVersion.compareTo(existingVersion) > 0 ){
+          logger.error("Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'")
+        }
+
+      }
+      case None => throw new Exception("Omitted error referes to dependency not found..")
+    }
+
+
+    //logger.debug("Handling omitted error. version: " + version)
+    //printDependencyHierarchy( dependencyHierarchy)
+  }
+
+  private def printDependencyHierarchy(dependencyHierarchy: collection.immutable.Queue[Dependency]){
+    var indent = ""
+    dependencyHierarchy.toArray.foreach{
+      x => logger.debug( indent + "" +x)
+      indent = indent + "  "
+    }
   }
 }

@@ -1,7 +1,8 @@
 package deptools.plugin.scala.parser
 
 import org.junit.Test
-import deptools.plugin.scala.utils.File2QueueReader
+import deptools.plugin.scala.utils.{MyLogger, File2QueueReader}
+import java.lang.String
 
 /**
  * Created by IntelliJ IDEA.
@@ -12,16 +13,25 @@ import deptools.plugin.scala.utils.File2QueueReader
  */
 
 @Test
-class DepTreeOutputParserTest{
+class DepTreeOutputParserTest {
+  object MyTestLogger extends MyLogger {
+    def debug(msg: String) = println("debug: "+msg)
 
-  @Test
-  def testParsing(){
-    DepTreeOutputParser.parse( File2QueueReader.readFile("maven-deptools-plugin-scala/src/test/resources/dep_tree2.txt") )
+    def error(msg: String) = println("ERROR: "+ msg)
   }
 
   @Test
-  def testParsing2(){
-    DepTreeOutputParser.parse( File2QueueReader.readFile("maven-deptools-plugin-scala/src/test/resources/dependency_tree.txt") )
+  def testParsing() {
+    val filename = "maven-deptools-plugin-scala/src/test/resources/dep_tree2.txt"
+    println("testing " + filename)
+    new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
-  
+
+  @Test
+  def testParsing2() {
+    val filename = "maven-deptools-plugin-scala/src/test/resources/dependency_tree.txt"
+    println("testing " + filename)
+    new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
+  }
+
 }

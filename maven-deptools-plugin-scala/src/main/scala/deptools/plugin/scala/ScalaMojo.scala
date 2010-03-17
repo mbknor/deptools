@@ -6,7 +6,8 @@ import org.apache.maven.plugin.{PluginManager, AbstractMojo}
 import org.twdata.maven.mojoexecutor.MojoExecutor._
 import collection.mutable.{Queue, ListBuffer}
 import parser.DepTreeOutputParser
-import utils.File2QueueReader
+import utils.{MyLogger, File2QueueReader}
+import java.lang.String
 
 /**
  * Created by IntelliJ IDEA.
@@ -45,7 +46,17 @@ abstract class ScalaMojo extends AbstractMojo {
     executeDepTree()
     val lines = File2QueueReader.readFile( outputFilename )
 
-    DepTreeOutputParser.parse( lines )
+    object MyMojoLogger extends AnyRef with MyLogger{
+      def debug(msg: String) {
+        getLog().debug( msg )
+      }
+
+      def error(msg: String) {
+        getLog().error( msg )
+      }
+    }
+
+    new DepTreeOutputParser(MyMojoLogger).parse( lines )
 
 
     return
