@@ -1,0 +1,26 @@
+
+
+how to run the plugin from command line:
+
+mvn deptools.plugin:maven-deptools-plugin:check2
+
+
+To add this plugin to your pom.xml so your build will fail,
+you can do it like this:
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>deptools.plugin</groupId>
+                <artifactId>maven-deptools-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>check2</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
