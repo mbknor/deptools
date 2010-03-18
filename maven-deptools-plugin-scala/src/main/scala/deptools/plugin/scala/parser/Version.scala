@@ -10,8 +10,6 @@ import collection.mutable.ListBuffer
  * To change this template use File | Settings | File Templates.
  */
 
-//TODO: must specialcase on  snaphot-versions
-
 trait VersionPart {
   def compareTo(other : VersionPart) : Int
 }
