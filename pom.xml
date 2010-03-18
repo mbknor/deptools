@@ -16,7 +16,7 @@
     </modules>
 
     <scm>
-        <connection>scm:git:file://localhost/</connection>
+        <connection>scm:git:file://localhost/Users/morten/Documents/projects/maven-deptools-plugin</connection>
         <url>scm:git:git://github.com/mbknor/deptools.git</url>
     </scm>
 
