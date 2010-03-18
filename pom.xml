@@ -16,7 +16,7 @@
     </modules>
 
     <scm>
-        <connection>scm:git:git@github.com:mbknor/deptools.git</connection>
+        <connection>scm:git:file://localhost/</connection>
         <url>scm:git:git://github.com/mbknor/deptools.git</url>
     </scm>
 
