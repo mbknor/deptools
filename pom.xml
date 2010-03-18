@@ -16,8 +16,8 @@
     </modules>
 
     <scm>
-        <connection>scm:git:git://github.com/mbknor/deptools.git</connection>
-        <url>scm:git:git://github.com/mrdon/mbknor/deptools.git</url>
+        <connection>scm:git:git@github.com:mbknor/deptools.git</connection>
+        <url>scm:git:git://github.com/mbknor/deptools.git</url>
     </scm>
 
 
