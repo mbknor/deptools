@@ -34,4 +34,11 @@ class DepTreeOutputParserTest {
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
+  @Test
+  def testParsing3() {
+    val filename = "maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt"
+    println("testing " + filename)
+    new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
+  }
+
 }

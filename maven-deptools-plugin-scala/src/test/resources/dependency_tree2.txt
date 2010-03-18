@@ -1,0 +1,7 @@
+com.kjetland:testproject4-2:jar:1.0-SNAPSHOT
+\- active project artifact:
+	artifact = active project artifact:
+	artifact = com.kjetland:testproject4-1:jar:1.0-SNAPSHOT:compile;
+	project: MavenProject: com.kjetland:testproject4-1:1.0-SNAPSHOT @ C:\Users\morten\Documents\projects\maven-deptools-plugin\test\testproject4\testproject4-1\pom.xml;
+	project: MavenProject: com.kjetland:testproject4-1:1.0-SNAPSHOT @ C:\Users\morten\Documents\projects\maven-deptools-plugin\test\testproject4\testproject4-1\pom.xml
+   \- commons-logging:commons-logging:jar:1.1.1:compile
