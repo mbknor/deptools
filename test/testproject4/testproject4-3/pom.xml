@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.kjetland</groupId>
+        <artifactId>deptools-testproject4-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <packaging>jar</packaging>
+    <artifactId>testproject4-2</artifactId>
+
+    <!-- building this project will not fail since
+         spring-core has dependency to an older
+         version of commons-logging than the
+         version specified directly in this pom
+    -->
+    <dependencies>
+        <dependency>
+            <groupId>com.kjetland</groupId>
+            <artifactId>testproject4-1</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
+
+
+</project>
