@@ -48,9 +48,22 @@ class DepTreeOutputParser(logger: MyLogger) {
    */
   private def parseLines( linesLeft: Queue[String], buildDependencyMap : Boolean ){
     //pop first line from queue - it only contains the name for the processed maven project
-    //TODO: must parse dependency in first line and place it in the dependency-queue we start parse() with..
-    linesLeft.dequeue
-    parse(buildDependencyMap, linesLeft, new collection.immutable.Queue[Dependency](), 1)
+    val firstLine = linesLeft.dequeue
+    val parents = parseFirstLine( firstLine )
+    parse(buildDependencyMap, linesLeft, parents, 1)
+  }
+
+  private def parseFirstLine( line : String ) : collection.immutable.Queue[Dependency] = {
+    //first line looks like this: com.kjetland:testproject4-2:jar:1.0-SNAPSHOT
+
+    val artifactExpression = """(.+):(.+):(.+):(.+)""".r
+    line match{
+      case artifactExpression(gid, aid, t, v) => {
+        val rootDependency = new Dependency(gid, aid, t, v, "compile")
+        return new collection.immutable.Queue(rootDependency)
+      }
+      case _ => throw new Exception("Error parsing first line: '"+line+"'");
+    }
   }
 
   private def parse( buildDependencyMap:Boolean, linesLeft: Queue[String], parents: collection.immutable.Queue[Dependency], currentDepthLength: Int) {
@@ -209,8 +222,14 @@ class DepTreeOutputParser(logger: MyLogger) {
   private def printDependencyHierarchy(dependencyHierarchy: collection.immutable.Queue[Dependency]){
     var indent = ""
     dependencyHierarchy.toArray.foreach{
-      x => logger.error( indent + "" +x)
-      indent = indent + """  \-"""
+      x => 
+      val pre = if(indent.length==0){
+        ""
+      }else{
+        indent+"""|-"""
+      }
+      logger.error( pre + "" +x)
+      indent = indent + "  "
     }
   }
 }
