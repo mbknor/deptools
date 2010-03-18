@@ -68,14 +68,6 @@ class DepTreeOutputParser(logger: MyLogger) {
 
   private def parse( buildDependencyMap:Boolean, linesLeft: Queue[String], parents: collection.immutable.Queue[Dependency], currentDepthLength: Int) {
 
-    //when runing dependency:tree on module-project in parent structure
-    //we get some weired output...
-    //specialModulesDepIgnores is a regexp that finds and ignores these lines..
-    //See this file for example:
-    //maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
-    //TODO: must undertand artifact output as seen in maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
-    //and discover the dependency it refers to
-    val specialModulesDepIgnores = """.+(?:- active project artifact:|artifact = |project: MavenProject: ).*""".r
     val depthExpression = """([ \\\+\-|]*)- (.+)""".r
 
 
@@ -86,12 +78,6 @@ class DepTreeOutputParser(logger: MyLogger) {
       val line = linesLeft.front
       //(commons-logging:commons-logging:jar:1.1.1:compile - omitted for conflict with 1.0.1)
       line match {
-        //see comment above declaration of val specialModulesDepIgnores for info
-        case specialModulesDepIgnores() => {
-          //ignoring this line
-          linesLeft.dequeue;
-          //logger.debug("special ignorin: " + line)
-        }
         case depthExpression(depth, depString) => {
           val depthLength = depth.length
           //when depthLength is larger than currentDepthLength, then this is the first
@@ -118,7 +104,7 @@ class DepTreeOutputParser(logger: MyLogger) {
           } else {
             //pop the line from the queue
             linesLeft.dequeue;
-            var dependency = parseDep(buildDependencyMap, parents, depString)
+            var dependency = parseDep(buildDependencyMap, parents, depString, linesLeft)
 
 
             if( dependency != null ){
@@ -141,7 +127,11 @@ class DepTreeOutputParser(logger: MyLogger) {
 
   }
 
-  private def parseDep(ignoreErrors:Boolean, parents: collection.immutable.Queue[Dependency], depString: String): Dependency = {
+  private def parseDep(
+          ignoreErrors:Boolean,
+          parents: collection.immutable.Queue[Dependency],
+          depString: String,
+          linesLeft: Queue[String]): Dependency = {
     val artifactExpressionPart = """(.+):(.+):(.+):(.+):(.+)"""
 
     val okArtifactExpression = (artifactExpressionPart).r
@@ -149,7 +139,9 @@ class DepTreeOutputParser(logger: MyLogger) {
     val duplicateArtifactExpression = """\(.+ - omitted for duplicate\)""".r
 
 
+
     depString match {
+      case "active project artifact:" => return handleActiveProjectArtifact(linesLeft)
       case errorArtifactExpression( gid, aid, t, v, scope, errorMsg ) => {
         if( ignoreErrors ) return null
         
@@ -164,6 +156,45 @@ class DepTreeOutputParser(logger: MyLogger) {
         throw new Exception("error parsing dependency: " + depString)
       }
     }
+  }
+
+  private def handleActiveProjectArtifact(linesLeft: Queue[String]): Dependency = {
+    //when runing dependency:tree on module-project in parent structure
+    //we get some weired output...
+    //specialModulesDepIgnores is a regexp that finds and ignores these lines..
+    //See this file for example:
+    //maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
+    //TODO: must undertand artifact output as seen in maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
+    //and discover the dependency it refers to
+
+    //we must read multiple lines and use this line:
+    //[tab]artifact = com.kjetland:testproject4-1:jar:1.0-SNAPSHOT:compile;
+
+    //we must remove all lines starting with tab from the linesLeft-queue
+
+    var dependency : Dependency = null
+
+
+    while( !linesLeft.isEmpty && linesLeft.front.startsWith("\t") ){
+      //this is an active project artifact line since it starts with tab
+      //pop it from linesLeft
+      val line = linesLeft.dequeue
+
+      val artifactExpr = """\tartifact = (.+):(.+):(.+):(.+):(.+);""".r
+
+      line match {
+        case artifactExpr(gid, aid, t, v, scope) => {
+          //found an active project artifact line.
+          dependency = new Dependency(gid, aid, t, v, scope)
+        }
+        case _ => None //just ignore this line
+      }
+
+    }
+
+    if( dependency == null ) throw new Exception("Error parsing Active Project Artifact syntax")
+
+    return dependency
   }
 
   private def handleError( dependencyHierarchy: collection.immutable.Queue[Dependency], errorMsg : String) {
