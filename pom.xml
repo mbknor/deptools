@@ -34,4 +34,13 @@
 
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>mbk_mvn_repo</id>
+            <layout>default</layout>
+            <name>mbk_mvn_repo</name>
+            <url>file://../mbk_mvn_repo</url>
+        </repository>
+    </distributionManagement>
+
 </project>
