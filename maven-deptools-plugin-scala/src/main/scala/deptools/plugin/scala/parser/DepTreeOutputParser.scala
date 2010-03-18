@@ -73,6 +73,8 @@ class DepTreeOutputParser(logger: MyLogger) {
     //specialModulesDepIgnores is a regexp that finds and ignores these lines..
     //See this file for example:
     //maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
+    //TODO: must undertand artifact output as seen in maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
+    //and discover the dependency it refers to
     val specialModulesDepIgnores = """.+(?:- active project artifact:|artifact = |project: MavenProject: ).*""".r
     val depthExpression = """([ \\\+\-|]*)- (.+)""".r
 
