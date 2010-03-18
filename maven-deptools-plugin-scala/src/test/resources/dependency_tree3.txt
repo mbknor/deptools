@@ -1,0 +1,16 @@
+com.kjetland:testproject4-3:jar:1.0-SNAPSHOT
++- active project artifact:
+	artifact = active project artifact:
+	artifact = com.kjetland:testproject4-2:jar:1.0-SNAPSHOT:compile;
+	project: MavenProject: com.kjetland:testproject4-2:1.0-SNAPSHOT @ C:\Users\morten\Documents\projects\maven-deptools-plugin\test\testproject4\testproject4-2\pom.xml;
+	project: MavenProject: com.kjetland:testproject4-2:1.0-SNAPSHOT @ C:\Users\morten\Documents\projects\maven-deptools-plugin\test\testproject4\testproject4-2\pom.xml
+|  \- active project artifact:
+	artifact = com.kjetland:testproject4-1:jar:1.0-SNAPSHOT:compile;
+	project: MavenProject: com.kjetland:testproject4-1:1.0-SNAPSHOT @ C:\Users\morten\Documents\projects\maven-deptools-plugin\test\testproject4\testproject4-1\pom.xml
+|     \- (commons-logging:commons-logging:jar:1.1.1:compile - omitted for conflict with 1.1)
+\- org.springframework.:spring-core:jar:2.0:compile
+   \- commons-logging:commons-logging:jar:1.1:compile
+      +- log4j:log4j:jar:1.2.12:compile
+      +- logkit:logkit:jar:1.0.1:compile
+      +- avalon-framework:avalon-framework:jar:4.1.3:compile
+      \- javax.servlet:servlet-api:jar:2.3:compile
