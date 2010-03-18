@@ -8,18 +8,23 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>testproject4-2</artifactId>
+    <artifactId>testproject4-3</artifactId>
 
-    <!-- building this project will not fail since
-         spring-core has dependency to an older
+    <!-- building this project will fail since
+         testproject4-2 has dependency to a newer
          version of commons-logging than the
-         version specified directly in this pom
+         the closer dependency spring-core has dependency to
     -->
     <dependencies>
         <dependency>
             <groupId>com.kjetland</groupId>
-            <artifactId>testproject4-1</artifactId>
+            <artifactId>testproject4-2</artifactId>
             <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>2.0</version>
         </dependency>
     </dependencies>
 

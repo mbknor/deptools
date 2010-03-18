@@ -1,10 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.kjetland</groupId>
-    <artifactId>deptools-testproject3</artifactId>
+    <parent>
+        <groupId>com.kjetland</groupId>
+        <artifactId>deptools-testproject4-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>testproject4-1</artifactId>
 
     <!-- building this project will not fail since
          spring-core has dependency to an older
@@ -17,30 +21,8 @@
             <artifactId>commons-logging</artifactId>
             <version>1.1.1</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>2.0</version>
-        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>deptools.plugin</groupId>
-                <artifactId>maven-deptools-plugin</artifactId>
-                <!--<version>1.0-SNAPSHOT</version>-->
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>check2</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
 
 </project>

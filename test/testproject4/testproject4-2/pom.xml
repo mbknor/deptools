@@ -8,7 +8,7 @@
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>testproject4-1</artifactId>
+    <artifactId>testproject4-2</artifactId>
 
     <!-- building this project will not fail since
          spring-core has dependency to an older
@@ -17,9 +17,9 @@
     -->
     <dependencies>
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
-            <version>1.1.1</version>
+            <groupId>com.kjetland</groupId>
+            <artifactId>testproject4-1</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
