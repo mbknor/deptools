@@ -2,6 +2,7 @@ package deptools.plugin.scala.parser
 
 import deptools.plugin.scala.utils.MyLogger
 import collection.mutable.{HashMap, Queue, ListBuffer}
+import org.apache.maven.plugin.MojoFailureException
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,16 +29,38 @@ class Dependency(
 
 class DepTreeOutputParser(logger: MyLogger) {
 
-  val dependencies = new HashMap[String, Dependency]
+  val dependencies = new HashMap[String, collection.immutable.Queue[Dependency]]
+
+
 
   def parse(linesLeft: Queue[String]) {
-    //pop first line from queue - it only contains the name for the processed maven project
-    linesLeft.dequeue
-    parse(linesLeft, new collection.immutable.Queue[Dependency](), 1)
+    //first parse output and ignore all errors just to build map
+    //of all known dependencies...
+    parseLines( linesLeft.clone, true )
+
+    //then parse again and check for errors
+    parseLines( linesLeft, false )
   }
 
-  private def parse(linesLeft: Queue[String], parents: collection.immutable.Queue[Dependency], currentDepthLength: Int) {
+  /**
+   * When buildDependencyMap is true, we ignore all erros and just build dependency map.
+   * When buildDependencyMap is false, we look for errors and use dependency map already built
+   */
+  private def parseLines( linesLeft: Queue[String], buildDependencyMap : Boolean ){
+    //pop first line from queue - it only contains the name for the processed maven project
+    //TODO: must parse dependency in first line and place it in the dependency-queue we start parse() with..
+    linesLeft.dequeue
+    parse(buildDependencyMap, linesLeft, new collection.immutable.Queue[Dependency](), 1)
+  }
 
+  private def parse( buildDependencyMap:Boolean, linesLeft: Queue[String], parents: collection.immutable.Queue[Dependency], currentDepthLength: Int) {
+
+    //when runing dependency:tree on module-project in parent structure
+    //we get some weired output...
+    //specialModulesDepIgnores is a regexp that finds and ignores these lines..
+    //See this file for example:
+    //maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt
+    val specialModulesDepIgnores = """.+(?:- active project artifact:|artifact = |project: MavenProject: ).*""".r
     val depthExpression = """([ \\\+\-|]*)- (.+)""".r
 
 
@@ -48,11 +71,12 @@ class DepTreeOutputParser(logger: MyLogger) {
       val line = linesLeft.front
       //(commons-logging:commons-logging:jar:1.1.1:compile - omitted for conflict with 1.0.1)
       line match {
-      /*case regularDep(children, gid, aid, t, v, scope) => {
-        val dep = new Dependency(gid, aid, t, v, scope)
-
-        println(children + " " + dep)
-      }*/
+        //see comment above declaration of val specialModulesDepIgnores for info
+        case specialModulesDepIgnores() => {
+          //ignoring this line
+          linesLeft.dequeue;
+          //logger.debug("special ignorin: " + line)
+        }
         case depthExpression(depth, depString) => {
           val depthLength = depth.length
           //when depthLength is larger than currentDepthLength, then this is the first
@@ -70,7 +94,7 @@ class DepTreeOutputParser(logger: MyLogger) {
           if (depthLength > currentDepthLength) {
             //this is the first child
             //println("child")
-            parse(linesLeft, parents.enqueue(previousDependency), depthLength)
+            parse(buildDependencyMap, linesLeft, parents.enqueue(previousDependency), depthLength)
 
           } else if (depthLength < currentDepthLength) {
             //past last child
@@ -79,26 +103,30 @@ class DepTreeOutputParser(logger: MyLogger) {
           } else {
             //pop the line from the queue
             linesLeft.dequeue;
-            var dependency = parseDep(parents, depString)
+            var dependency = parseDep(buildDependencyMap, parents, depString)
 
-            dependencies.update(dependency.key, dependency)
-            //println(parents.size + " > " + "dependency: " + dependency)
 
-            previousDependency = dependency;
+            if( dependency != null ){
+              if( buildDependencyMap ){
+                dependencies.update(dependency.key, parents enqueue dependency)
+              }
+              previousDependency = dependency;
+            }
+          
           }
 
         }
         case _ => {
           //line did not match any regexp.. just pop the line
           linesLeft.dequeue;
-          logger.debug("ignoring line: " + line)
+          //logger.debug("ignoring line: " + line)
         }
       }
     }
 
   }
 
-  private def parseDep(parents: collection.immutable.Queue[Dependency], depString: String): Dependency = {
+  private def parseDep(ignoreErrors:Boolean, parents: collection.immutable.Queue[Dependency], depString: String): Dependency = {
     val artifactExpressionPart = """(.+):(.+):(.+):(.+):(.+)"""
 
     val okArtifactExpression = (artifactExpressionPart).r
@@ -108,6 +136,8 @@ class DepTreeOutputParser(logger: MyLogger) {
 
     depString match {
       case errorArtifactExpression( gid, aid, t, v, scope, errorMsg ) => {
+        if( ignoreErrors ) return null
+        
         val dependency = new Dependency(gid, aid, t, v, scope)
         handleError( parents enqueue dependency, errorMsg)
         return dependency
@@ -147,14 +177,24 @@ class DepTreeOutputParser(logger: MyLogger) {
 
     //find existing occurance of this dependency
     dependencies.get( lastDep.key) match {
-      case Some(dep ) => {
+      case Some(depPath ) => {
         //logger.debug("refered dep: " + dep)
+
+        val dep = depPath.last
 
         //check if omitted version is older than included one.
         val thisVersion = new Version( lastDep.version)
         val existingVersion = new Version( dep.version )
         if( thisVersion.compareTo(existingVersion) > 0 ){
-          logger.error("Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'")
+          val mainErrorMsg = "Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'"
+          logger.error(mainErrorMsg)
+          logger.error("Path to omitted dependency:")
+          printDependencyHierarchy( dependencyHierarchy)
+          logger.error("Path to used(overriding) dependency:")
+          printDependencyHierarchy( depPath)
+
+          //fail the build
+          throw new MojoFailureException(mainErrorMsg)
         }
 
       }
@@ -169,8 +209,8 @@ class DepTreeOutputParser(logger: MyLogger) {
   private def printDependencyHierarchy(dependencyHierarchy: collection.immutable.Queue[Dependency]){
     var indent = ""
     dependencyHierarchy.toArray.foreach{
-      x => logger.debug( indent + "" +x)
-      indent = indent + "  "
+      x => logger.error( indent + "" +x)
+      indent = indent + """  \-"""
     }
   }
 }
