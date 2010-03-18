@@ -3,6 +3,7 @@ package deptools.plugin.scala.parser
 import org.junit.Test
 import deptools.plugin.scala.utils.{MyLogger, File2QueueReader}
 import java.lang.String
+import org.apache.maven.plugin.MojoFailureException
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,30 +21,30 @@ class DepTreeOutputParserTest {
     def error(msg: String) = println("ERROR: "+ msg)
   }
 
-  @Test
+  @Test{ val expected = classOf[ MojoFailureException] }
   def testParsing() {
-    val filename = "maven-deptools-plugin-scala/src/test/resources/dep_tree2.txt"
+    val filename = "src/test/resources/dep_tree2.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
-  @Test
+  @Test{ val expected = classOf[ MojoFailureException] }
   def testParsing2() {
-    val filename = "maven-deptools-plugin-scala/src/test/resources/dependency_tree.txt"
+    val filename = "src/test/resources/dependency_tree.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
   @Test
   def testParsing3() {
-    val filename = "maven-deptools-plugin-scala/src/test/resources/dependency_tree2.txt"
+    val filename = "src/test/resources/dependency_tree2.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
-  @Test
+  @Test{ val expected = classOf[ MojoFailureException] }
   def testParsing4() {
-    val filename = "maven-deptools-plugin-scala/src/test/resources/dependency_tree3.txt"
+    val filename = "src/test/resources/dependency_tree3.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
