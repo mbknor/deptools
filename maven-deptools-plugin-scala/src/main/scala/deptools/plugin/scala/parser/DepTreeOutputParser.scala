@@ -233,11 +233,14 @@ class DepTreeOutputParser(logger: MyLogger) {
         val existingVersion = new Version( dep.version )
         if( thisVersion.compareTo(existingVersion) > 0 ){
           val mainErrorMsg = "Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'"
-          logger.error(mainErrorMsg)
-          logger.error("Path to omitted dependency:")
+          logger.info(mainErrorMsg)
+          logger.info("")
+          logger.info("Path to omitted dependency:")
           printDependencyHierarchy( dependencyHierarchy)
-          logger.error("Path to used(overriding) dependency:")
+          logger.info("")
+          logger.info("Path to used(overriding) dependency:")
           printDependencyHierarchy( depPath)
+          logger.info("")
 
           //fail the build
           throw new MojoFailureException(mainErrorMsg)
@@ -253,16 +256,18 @@ class DepTreeOutputParser(logger: MyLogger) {
   }
 
   private def printDependencyHierarchy(dependencyHierarchy: collection.immutable.Queue[Dependency]){
-    var indent = ""
+    var count = 0
+    var indent = "  "
     dependencyHierarchy.toArray.foreach{
       x => 
-      val pre = if(indent.length==0){
+      val pre = if(count==0){
         ""
       }else{
-        indent+"""|-"""
+        """|-"""
       }
-      logger.error( pre + "" +x)
+      logger.info( indent + pre + "" +x)
       indent = indent + "  "
+      count += 1
     }
   }
 }

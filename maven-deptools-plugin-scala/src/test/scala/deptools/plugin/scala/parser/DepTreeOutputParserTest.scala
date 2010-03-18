@@ -16,7 +16,7 @@ import java.lang.String
 class DepTreeOutputParserTest {
   object MyTestLogger extends MyLogger {
     def debug(msg: String) = println("debug: "+msg)
-
+    def info(msg: String) = println("INFO: " + msg)    
     def error(msg: String) = println("ERROR: "+ msg)
   }
 

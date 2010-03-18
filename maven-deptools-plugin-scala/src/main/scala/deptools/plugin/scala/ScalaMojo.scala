@@ -51,6 +51,10 @@ abstract class ScalaMojo extends AbstractMojo {
         getLog().debug( msg )
       }
 
+      def info(msg: String) {
+        getLog().info( msg )
+      }
+
       def error(msg: String) {
         getLog().error( msg )
       }

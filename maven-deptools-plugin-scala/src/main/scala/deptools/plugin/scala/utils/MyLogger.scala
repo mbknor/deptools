@@ -10,5 +10,6 @@ package deptools.plugin.scala.utils
 
 trait MyLogger{
   def debug( msg: String )
+  def info( msg: String)
   def error(msg: String)
 }
