@@ -22,7 +22,7 @@ The plugin can be found in this repository:
 
 how to run the plugin from command line:
 
-mvn deptools.plugin:maven-deptools-plugin:check2
+mvn deptools.plugin:maven-deptools-plugin:version-checker
 
 
 To add this plugin to your pom.xml so your build will fail,
@@ -37,7 +37,7 @@ you can do it like this:
                     <execution>
                         <phase>compile</phase>
                         <goals>
-                            <goal>check2</goal>
+                            <goal>version-checker</goal>
                         </goals>
                     </execution>
                 </executions>

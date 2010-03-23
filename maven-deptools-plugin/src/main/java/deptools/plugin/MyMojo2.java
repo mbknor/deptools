@@ -12,7 +12,7 @@ import org.apache.maven.project.MavenProject;
  * project with modules..
  *
  * @aggregator true
- * @goal check2
+ * @goal version-checker
  * @phase process-sources
  */
 public class MyMojo2

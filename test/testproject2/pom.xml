@@ -33,7 +33,7 @@
                     <execution>
                         <phase>compile</phase>
                         <goals>
-                            <goal>check2</goal>
+                            <goal>version-checker</goal>
                         </goals>
                     </execution>
                 </executions>
