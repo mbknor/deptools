@@ -18,23 +18,14 @@ import java.lang.String
  */
 
 abstract class ScalaMojo extends AbstractMojo {
-  private var _testString: String = null
 
-  private var _project: MavenProject = null
-  private var _session: MavenSession = null
-
-  private var _buildDir: String = null
   private val depTreeFilename = "/dependency_tree/dependency_tree.txt"
 
-  def setTestString(v: String) = _testString = v
 
-  def setProject(project: MavenProject) = _project = project
-
-  def setSession(session: MavenSession) = _session = session
-
-  def getPluginManager(): PluginManager
-
-  def setBuildDir(dir: String) = _buildDir = dir
+  def getProject: MavenProject
+  def getSession: MavenSession
+  def getBuildDir: String
+  def getPluginManager: PluginManager
 
 
   override def getLog = {
@@ -68,12 +59,12 @@ abstract class ScalaMojo extends AbstractMojo {
 
 
 
-  def outputFilename = _buildDir + depTreeFilename
+  def outputFilename = getBuildDir + depTreeFilename
 
 
 
   def executeDepTree() {
-    val pm = getPluginManager()
+    val pm = getPluginManager
     
     executeMojo(
       plugin(
@@ -88,8 +79,8 @@ abstract class ScalaMojo extends AbstractMojo {
         )
       ,
       executionEnvironment(
-        _project,
-        _session,
+        getProject,
+        getSession,
         pm
         )
       )

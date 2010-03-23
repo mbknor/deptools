@@ -24,15 +24,15 @@ public class MyMojo2
      *
      * therefor I have this java class that extends the scala class.
      *
-     * the scala class have the methods setTestString() and getTestString()
+     * The scala class has declered abstract getter-methods for all
+     * maven-specific-properties.
      *
-     * this java class has a protected property testString, which we
-     * can write the mojo annotation on.
+     * This java class extends the scala class, has actuall implementasjons
+     * of the getter-methods.
      *
-     * but when the plugin is launched, and maven uses reflection to set the value
-     * of the property, the scala setter is called..
+     * It also has the properties which we annotate with mojo-annotations..
      *
-     * short: we annotate on fake/unused property in java, but the code is in scala
+     * This is an hack to make it possible to write the actuall plugin-code in scala
      */
 
     /**
@@ -42,7 +42,7 @@ public class MyMojo2
      * @required
      * @readonly
      */
-    protected String testString;
+    //protected String testString;
 
     /**
      * The Maven Project Object
@@ -70,11 +70,6 @@ public class MyMojo2
      */
     protected PluginManager pluginManager;
 
-    @Override
-    public PluginManager getPluginManager() {
-        return pluginManager;
-    }
-
 
 
     /**
@@ -85,4 +80,41 @@ public class MyMojo2
      * @readonly
      */
     protected String buildDir;
+
+
+    @Override
+    public MavenProject getProject() {
+        return project;
+    }
+
+    public void setProject(MavenProject project) {
+        this.project = project;
+    }
+
+    @Override
+    public String getBuildDir() {
+        return buildDir;
+    }
+
+    public void setBuildDir(String buildDir) {
+        this.buildDir = buildDir;
+    }
+
+    @Override
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
+    public void setPluginManager(PluginManager pluginManager) {
+        this.pluginManager = pluginManager;
+    }
+
+    @Override
+    public MavenSession getSession() {
+        return session;
+    }
+
+    public void setSession(MavenSession session) {
+        this.session = session;
+    }
 }
