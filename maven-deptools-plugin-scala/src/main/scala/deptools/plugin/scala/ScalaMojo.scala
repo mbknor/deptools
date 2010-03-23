@@ -5,7 +5,8 @@ import org.apache.maven.execution.MavenSession
 import org.apache.maven.plugin.{PluginManager, AbstractMojo}
 import org.twdata.maven.mojoexecutor.MojoExecutor._
 import collection.mutable.{Queue, ListBuffer}
-import parser.DepTreeOutputParser
+import parser.filter.DependencyFilterIncludeExcludeImpl
+import parser.{DepTreeOutputParser}
 import utils.{MyLogger, File2QueueReader}
 import java.lang.String
 
@@ -26,6 +27,12 @@ abstract class ScalaMojo extends AbstractMojo {
   def getSession: MavenSession
   def getBuildDir: String
   def getPluginManager: PluginManager
+
+  //Optional Regex pattern used to find groupId/ArtifactId's to run version-check on
+  def getIncludePattern : String
+
+  //Optional Regex pattern used to exclude groupId/ArtifactId's to run version-check on
+  def getExcludePattern : String
 
 
   override def getLog = {
@@ -51,12 +58,21 @@ abstract class ScalaMojo extends AbstractMojo {
       }
     }
 
-    new DepTreeOutputParser(MyMojoLogger).parse( lines )
+    val dependencyFilter = new DependencyFilterIncludeExcludeImpl(fixEmptyString(getIncludePattern), fixEmptyString(getExcludePattern))
+
+    new DepTreeOutputParser(dependencyFilter, MyMojoLogger).parse( lines )
 
 
     return
   }
 
+  def fixEmptyString( str : String ) : String = {
+    if( str.trim.isEmpty ){
+      null
+    }else{
+      str
+    }
+  }
 
 
   def outputFilename = getBuildDir + depTreeFilename

@@ -71,7 +71,6 @@ public class MyMojo2
     protected PluginManager pluginManager;
 
 
-
     /**
      * The Maven Session Object
      *
@@ -80,6 +79,22 @@ public class MyMojo2
      * @readonly
      */
     protected String buildDir;
+
+    /**
+     * Optional Regex pattern used to find groupId/ArtifactId's to run version-check on
+     *
+     * @parameter expression="${includePattern}" default-value=""
+     * @readonly
+     */
+    protected String includePattern;
+
+    /**
+     * Optional Regex pattern used to exclude groupId/ArtifactId's to run version-check on
+     *
+     * @parameter expression="${excludePattern}" default-value=""
+     * @readonly
+     */
+    protected String excludePattern;
 
 
     @Override
@@ -116,5 +131,23 @@ public class MyMojo2
 
     public void setSession(MavenSession session) {
         this.session = session;
+    }
+
+    @Override
+    public String getExcludePattern() {
+        return excludePattern;
+    }
+
+    public void setExcludePattern(String excludePattern) {
+        this.excludePattern = excludePattern;
+    }
+
+    @Override
+    public String getIncludePattern() {
+        return includePattern;
+    }
+
+    public void setIncludePattern(String includePattern) {
+        this.includePattern = includePattern;
     }
 }

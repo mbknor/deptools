@@ -2,6 +2,7 @@ package deptools.plugin.scala.parser
 
 import deptools.plugin.scala.utils.MyLogger
 import collection.mutable.{HashMap, Queue, ListBuffer}
+import filter.DependencyFilter
 import org.apache.maven.plugin.MojoFailureException
 
 /**
@@ -12,22 +13,38 @@ import org.apache.maven.plugin.MojoFailureException
  * To change this template use File | Settings | File Templates.
  */
 
-class Dependency(
-        val groupId: String,
-        val artifactId: String,
-        val packaging: String,
-        val version: String,
-        val scope: String) {
-
-  def key = groupId + ":" + artifactId
 
 
-  override def toString = groupId + ":" + artifactId + ":" + ":" + version
+/**
+ * includePattern and excludePattern is optional(can be null).
+ * If not null, they should be regexp.
+ *
+ * When DepTreeOutputParser finds an error, includePattern and excludePattern can
+ * be used to decide if the plugin should fail the build.
+ *
+ * the patterns is used like this:
+ *
+ * if includePattern is declared - we only proceed with the build-fail  if the include matches.
+ * if excludePattern is declared - we only proceed with the build-fail if the exclude does not match.
+ *
+ * Both patterns is checked in the order specified above.
+ *
+ * This is how the pattern-matching is done.
+ *
+ * the regexp is matched against both the string 'groupId:artifactId' for both the dependency with the error,
+ * AND for the complete dependency-path that leaded to that faulty dependency.
+ * The topmost dependency is not checked against the patterns, since it will always be the project you are building.
+ */
+class DepTreeOutputParser(
+        dependencyFilter : DependencyFilter,
+        logger: MyLogger) {
 
-  def extendedToString = "dep: groupId: '" + groupId + "' artifactId: '" + artifactId + "' packaging: '" + packaging + "' version: '" + version + "' scope: '" + scope+"'"
-}
 
-class DepTreeOutputParser(logger: MyLogger) {
+  def this( logger: MyLogger ){
+    this( null, logger)
+  }
+
+
 
   val dependencies = new HashMap[String, collection.immutable.Queue[Dependency]]
 
@@ -232,18 +249,26 @@ class DepTreeOutputParser(logger: MyLogger) {
         val thisVersion = new Version( lastDep.version)
         val existingVersion = new Version( dep.version )
         if( thisVersion.compareTo(existingVersion) > 0 ){
-          val mainErrorMsg = "Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'"
-          logger.info(mainErrorMsg)
-          logger.info("")
-          logger.info("Path to omitted dependency:")
-          printDependencyHierarchy( dependencyHierarchy)
-          logger.info("")
-          logger.info("Path to used(overriding) dependency:")
-          printDependencyHierarchy( depPath)
-          logger.info("")
 
-          //fail the build
-          throw new MojoFailureException(mainErrorMsg)
+          //must check dependencyPath against filter to know
+          //if we should fail the build or not
+          if( dependencyFilter == null || dependencyFilter.matches( dependencyHierarchy.toArray )){
+
+            val mainErrorMsg = "Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'"
+            logger.info(mainErrorMsg)
+            logger.info("")
+            logger.info("Path to omitted dependency:")
+            printDependencyHierarchy( dependencyHierarchy)
+            logger.info("")
+            logger.info("Path to used(overriding) dependency:")
+            printDependencyHierarchy( depPath)
+            logger.info("")
+
+            //fail the build
+            throw new MojoFailureException(mainErrorMsg)
+          }else{
+            logger.debug("Ignoring omitted error due to filter: Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'")
+          }
         }
 
       }
