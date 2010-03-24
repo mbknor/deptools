@@ -1,11 +1,30 @@
-*****
+Maven deptools plugin
 
-First RC of this plugin is out..
+---------------------------------------
+Maven 2 plugin which gives build error if maven resolves transient dependencies
+in such a way that the none-newest version is chosen.
 
-Please try it out and report issues to me here:
+At work we have all kinds of different dependencies problems related to transient
+dependencies.
+
+Transient dependencies has many downsides, but in my opinion, the alternative is worse.
+
+This plugin makes it possible to have the build process fail if not the newest
+version of a referred dependency is selected by mavens dependency resolving.
+
+It is possible to include/exclude which artifacts should be included in the check.
+
+This will make it possible for us to check dependency resolving for all
+inhouse api’s and projects..
+
+The plugin is written in Scala
+
+---------------------------------------
+
+If you find a bug or have a feature request, report them here:
 http://github.com/mbknor/deptools/issues
 
-*****
+---------------------------------------
 
 
 The plugin can be found in this repository:
@@ -18,14 +37,22 @@ The plugin can be found in this repository:
         </pluginRepository>
     </pluginRepositories>
 
+(PS: the repository does not work from Nexus(http://nexus.sonatype.org/))
 
+---------------------------------------
 
-how to run the plugin from command line:
+To run the plugin from the command line:
 
 mvn deptools.plugin:maven-deptools-plugin:version-checker
 
+To include/exclude dependencies use one/both of these settings:
+-DexcludePattern=<regular expression>
+-DincludePattern=<regular expression>
 
-To add this plugin to your pom.xml so your build will fail,
+---------------------------------------
+
+If you want to automatically include the deptools plugin
+in your build, so it can fail your build if it finds an error,
 you can do it like this:
 
     <build>
@@ -33,6 +60,23 @@ you can do it like this:
             <plugin>
                 <groupId>deptools.plugin</groupId>
                 <artifactId>maven-deptools-plugin</artifactId>
+                <!--
+                    Use these optional settings to include and/or include
+                    dependencies from the check:
+
+                    <includePattern> a valid regular expression </includePattern>
+                    <excludePattern> a valid regular expression </excludePattern>
+
+                    The pattern is matched against the string "groupId:artifactId" for
+                    all dependencies in the dependency-path.
+
+                    Example:
+                    <includePattern>com.kjetland:.*</includePattern>
+                    The pattern above will only fail the build if an error is found
+                    on any dependency linked to from a an artifact with groupId
+                    equal to 'com.kjetland'
+
+                -->
                 <executions>
                     <execution>
                         <phase>compile</phase>
