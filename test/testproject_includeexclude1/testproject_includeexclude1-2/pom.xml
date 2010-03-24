@@ -3,29 +3,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.kjetland</groupId>
-        <artifactId>deptools-testproject4-parent</artifactId>
+        <artifactId>deptools-testproject_includeexclude1-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <packaging>jar</packaging>
-    <artifactId>testproject4-3</artifactId>
+    <artifactId>testproject_includeexclude1-2</artifactId>
 
-    <!-- building this project will fail since
-         testproject4-2 has dependency to a newer
+    <!-- building this project will not fail since
+         spring-core has dependency to an older
          version of commons-logging than the
-         the closer dependency spring-core has dependency to.
-
+         version specified directly in this pom
     -->
     <dependencies>
         <dependency>
             <groupId>com.kjetland</groupId>
-            <artifactId>testproject4-2</artifactId>
+            <artifactId>testproject_includeexclude1-1</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.</groupId>
-            <artifactId>spring-core</artifactId>
-            <version>2.0</version>
         </dependency>
     </dependencies>
 

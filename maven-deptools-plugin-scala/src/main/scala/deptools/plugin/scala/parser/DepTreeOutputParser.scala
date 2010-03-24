@@ -267,7 +267,7 @@ class DepTreeOutputParser(
             //fail the build
             throw new MojoFailureException(mainErrorMsg)
           }else{
-            logger.debug("Ignoring omitted error due to filter: Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'")
+            logger.info("Ignoring omitted error due to filter: Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'")
           }
         }
 

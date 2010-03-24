@@ -60,6 +60,8 @@ abstract class ScalaMojo extends AbstractMojo {
 
     val dependencyFilter = new DependencyFilterIncludeExcludeImpl(fixEmptyString(getIncludePattern), fixEmptyString(getExcludePattern))
 
+    MyMojoLogger.info("Using filter: " + dependencyFilter)
+
     new DepTreeOutputParser(dependencyFilter, MyMojoLogger).parse( lines )
 
 
@@ -67,7 +69,7 @@ abstract class ScalaMojo extends AbstractMojo {
   }
 
   def fixEmptyString( str : String ) : String = {
-    if( str.trim.isEmpty ){
+    if( str == null || str.trim.isEmpty ){
       null
     }else{
       str

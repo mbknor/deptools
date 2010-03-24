@@ -83,16 +83,14 @@ public class MyMojo2
     /**
      * Optional Regex pattern used to find groupId/ArtifactId's to run version-check on
      *
-     * @parameter expression="${includePattern}" default-value=""
-     * @readonly
+     * @parameter expression="${includePattern}"
      */
     protected String includePattern;
 
     /**
      * Optional Regex pattern used to exclude groupId/ArtifactId's to run version-check on
      *
-     * @parameter expression="${excludePattern}" default-value=""
-     * @readonly
+     * @parameter expression="${excludePattern}"
      */
     protected String excludePattern;
 

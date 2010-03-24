@@ -51,12 +51,23 @@ class DependencyFilterIncludeExcludeImpl(
 
     return true
   }
+
+
+  override def toString = "include: " + include + " exclude: "+exclude
 }
 
 
 class DependencyMatcher ( patternString : String ) extends DependencyFilter {
 
   val pattern = createPattern( patternString)
+
+
+  override def toString = {
+    pattern match {
+      case Some(x) => x.toString
+      case None => "all"
+    }
+  }
 
   private def createPattern( patternString : String ) : Option[Regex] = {
     if( patternString == null ){
