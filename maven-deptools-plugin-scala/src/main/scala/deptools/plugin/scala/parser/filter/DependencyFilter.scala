@@ -65,7 +65,7 @@ class DependencyMatcher ( patternString : String ) extends DependencyFilter {
   override def toString = {
     pattern match {
       case Some(x) => x.toString
-      case None => "all"
+      case None => "<not set>"
     }
   }
 
