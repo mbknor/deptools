@@ -1,0 +1,148 @@
+com.company.fgfgr.SomeSystem:SomeSystemGateway:war:1.11.1-SNAPSHOT
++- com.company.fgfgr:logging-utils:jar:1.1:runtime (scope not updated to compile)
+|  +- (log4j:log4j:jar:1.2.14:compile - scope updated from runtime; omitted for duplicate)
+|  +- (org.slf4j:slf4j-log4j12:jar:1.5.8:runtime - omitted for conflict with 1.5.6)
+|  +- (org.slf4j:jcl-over-slf4j:jar:1.5.8:runtime - omitted for conflict with 1.5.6)
+|  +- (com.company.fgfgr:company_config_helper:jar:1.1.2:runtime - omitted for conflict with 1.1.3)
+|  \- (org.easymock:easymock:jar:2.5.1:compile - scope updated from runtime; omitted for duplicate)
++- com.company.fgfgr.rest.server:company-rest-server-base:jar:2.0:compile
+|  +- org.restlet:org.restlet:jar:1.1.6:compile
+|  +- org.restlet:org.restlet.ext.spring:jar:1.1.6:compile
+|  |  +- (org.restlet:org.restlet:jar:1.1.6:compile - omitted for duplicate)
+|  |  +- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
+|  |  +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  |  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  |  +- (org.springframework:spring-web:jar:2.5.6:compile - omitted for duplicate)
+|  |  \- org.springframework:spring-webmvc:jar:2.5.6:compile
+|  |     +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for duplicate)
+|  |     +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for duplicate)
+|  |     +- org.springframework:spring-context-support:jar:2.5.6:compile
+|  |     |  +- (aopalliance:aopalliance:jar:1.0:compile - omitted for duplicate)
+|  |     |  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for duplicate)
+|  |     |  +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for duplicate)
+|  |     |  \- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
+|  |     +- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
+|  |     \- (org.springframework:spring-web:jar:2.5.6:compile - omitted for duplicate)
+|  +- com.noelios.restlet:com.noelios.restlet.ext.spring:jar:1.1.6:compile
+|  |  +- (com.noelios.restlet:com.noelios.restlet.ext.servlet:jar:1.1.6:compile - omitted for duplicate)
+|  |  +- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
+|  |  +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for duplicate)
+|  |  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for duplicate)
+|  |  +- (org.springframework:spring-web:jar:2.5.6:compile - omitted for duplicate)
+|  |  \- (org.springframework:spring-webmvc:jar:2.5.6:compile - omitted for duplicate)
+|  +- com.noelios.restlet:com.noelios.restlet.ext.servlet:jar:1.1.6:compile
+|  |  \- (com.noelios.restlet:com.noelios.restlet:jar:1.1.6:compile - omitted for duplicate)
+|  +- com.noelios.restlet:com.noelios.restlet:jar:1.1.6:compile
+|  |  \- (org.restlet:org.restlet:jar:1.1.6:compile - omitted for duplicate)
+|  +- (log4j:log4j:jar:1.2.14:compile - omitted for conflict with 1.2.15)
+|  +- com.company.fgfgr.companyresturils:CompanyRestUtils:jar:2.0:compile
+|  |  \- (com.thoughtworks.xstream:xstream:jar:1.3.1:compile - omitted for duplicate)
+|  +- (com.thoughtworks.xstream:xstream:jar:1.3.1:compile - omitted for duplicate)
+|  +- org.easymock:easymockclassextension:jar:2.4:compile
+|  |  +- (org.easymock:easymock:jar:2.5.1:compile - omitted for conflict with 2.5)
+|  |  \- cglib:cglib-nodep:jar:2.1_3:compile
+|  \- commons-codec:commons-codec:jar:1.4:compile
++- active project artifact:
+	artifact = active project artifact:
+	artifact = com.company.fgfgr.SomeSystem:SomeSystemGatewayModel:jar:1.11.1-SNAPSHOT:compile;
+	project: MavenProject: com.company.fgfgr.SomeSystem:SomeSystemGatewayModel:1.11.1-SNAPSHOT @ /home/morten/projects/SomeSystemGateway-parent/SomeSystemGatewayModel/pom.xml;
+	project: MavenProject: com.company.fgfgr.SomeSystem:SomeSystemGatewayModel:1.11.1-SNAPSHOT @ /home/morten/projects/SomeSystemGateway-parent/SomeSystemGatewayModel/pom.xml
+|  +- (com.thoughtworks.xstream:xstream:jar:1.3.1:compile - omitted for duplicate)
+|  +- commons-lang:commons-lang:jar:2.4:compile
+|  \- (log4j:log4j:jar:1.2.15:compile - omitted for conflict with 1.2.14)
++- active project artifact:
+	artifact = active project artifact:
+	artifact = com.company.fgfgr.SomeSystem:SomeSystemGateway_ee_client:jar:1.11.1-SNAPSHOT:compile;
+	project: MavenProject: com.company.fgfgr.SomeSystem:SomeSystemGateway_ee_client:1.11.1-SNAPSHOT @ /home/morten/projects/SomeSystemGateway-parent/SomeSystemGateway_ee_client/pom.xml;
+	project: MavenProject: com.company.fgfgr.SomeSystem:SomeSystemGateway_ee_client:1.11.1-SNAPSHOT @ /home/morten/projects/SomeSystemGateway-parent/SomeSystemGateway_ee_client/pom.xml
+|  +- (active project artifact:
+	artifact = com.company.fgfgr.SomeSystem:SomeSystemGatewayModel:jar:1.11.1-SNAPSHOT:compile;
+	project: MavenProject: com.company.fgfgr.SomeSystem:SomeSystemGatewayModel:1.11.1-SNAPSHOT @ /home/morten/projects/SomeSystemGateway-parent/SomeSystemGatewayModel/pom.xml - omitted for duplicate)
+|  +- csc-ee:csc-ee:jar:2.4.0:compile
+|  |  +- csc-ee:csc-ee-jtopen:jar:6.5.0:compile
+|  |  \- csc-ee:csc-ee-taskhandler:jar:2.4.0:compile
+|  +- dom4j:dom4j:jar:1.6.1:compile
+|  +- jaxen:jaxen:jar:1.1.1:compile
+|  |  +- (jaxen:jaxen:jar:1.1-beta-6:compile - omitted for cycle)
+|  |  +- (dom4j:dom4j:jar:1.6.1:compile - omitted for duplicate)
+|  |  +- (jaxen:jaxen:jar:1.0-FCS:compile - omitted for cycle)
+|  |  +- jdom:jdom:jar:1.0:compile
+|  |  \- xom:xom:jar:1.0:compile
+|  |     \- xalan:xalan:jar:2.6.0:compile
+|  +- (org.springframework:spring-context:jar:2.5.6.SEC01:compile - omitted for conflict with 2.5.6)
+|  \- (log4j:log4j:jar:1.2.15:compile - omitted for conflict with 1.2.14)
++- com.company.fgfgr:company_config_helper:jar:1.1.3:compile
+|  +- (log4j:log4j:jar:1.2.14:compile - omitted for duplicate)
+|  \- org.springframework:spring-beans:jar:2.5.6.SEC01:compile
+|     +- (commons-logging:commons-logging:jar:1.1.1:compile - omitted for duplicate)
+|     \- (org.springframework:spring-core:jar:2.5.6.SEC01:compile - omitted for conflict with 2.5.6)
++- com.company.fgfgr.applicationstatus:applicationstatus:jar:1.1:compile
++- com.company.fgfgr:monitoring-rest-utils:jar:1.0.0:compile
+|  +- (com.company.fgfgr:logging-utils:jar:1.0.0:compile - omitted for conflict with 1.1)
+|  \- (com.company.fgfgr.rest.server:company-rest-server-base:jar:1.1:compile - omitted for conflict with 2.0)
++- com.company.fgfgr.rest.client:company-rest-client-base:jar:2.0:runtime
+|  +- (org.restlet:org.restlet:jar:1.1.6:runtime - omitted for duplicate)
+|  +- (com.noelios.restlet:com.noelios.restlet:jar:1.1.6:runtime - omitted for duplicate)
+|  +- (com.thoughtworks.xstream:xstream:jar:1.3.1:runtime - omitted for duplicate)
+|  +- (log4j:log4j:jar:1.2.15:runtime - omitted for conflict with 1.2.14)
+|  +- (com.company.fgfgr.companyresturils:CompanyRestUtils:jar:2.0:runtime - omitted for duplicate)
+|  \- (commons-codec:commons-codec:jar:1.4:runtime - omitted for duplicate)
++- junit:junit:jar:4.4:test
++- javax.servlet:servlet-api:jar:2.5:provided (scope not updated to runtime)
++- org.slf4j:slf4j-log4j12:jar:1.5.6:compile
+|  +- org.slf4j:slf4j-api:jar:1.5.6:compile
+|  \- (log4j:log4j:jar:1.2.14:compile - omitted for duplicate)
++- org.slf4j:jcl-over-slf4j:jar:1.5.6:compile
++- org.slf4j:jul-to-slf4j:jar:1.5.6:compile
+|  \- (org.slf4j:slf4j-api:jar:1.5.6:compile - omitted for duplicate)
++- org.springframework:spring-context:jar:2.5.6:compile
+|  +- aopalliance:aopalliance:jar:1.0:compile
+|  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  \- org.springframework:spring-core:jar:2.5.6:compile
++- org.springframework:spring-jdbc:jar:2.5.6:compile
+|  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for duplicate)
+|  +- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
+|  \- (org.springframework:spring-tx:jar:2.5.6:compile - omitted for duplicate)
++- org.springframework:spring-tx:jar:2.5.6:compile
+|  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for duplicate)
+|  \- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
++- org.springframework:spring-aop:jar:2.5.6:compile
+|  +- (aopalliance:aopalliance:jar:1.0:compile - omitted for duplicate)
+|  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  \- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
++- org.springframework:spring-web:jar:2.5.6:compile
+|  +- (org.springframework:spring-beans:jar:2.5.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  +- (org.springframework:spring-context:jar:2.5.6:compile - omitted for duplicate)
+|  \- (org.springframework:spring-core:jar:2.5.6:compile - omitted for duplicate)
++- com.thoughtworks.xstream:xstream:jar:1.3.1:compile
+|  \- xpp3:xpp3_min:jar:1.1.4c:compile
++- cglib:cglib:jar:2.1_3:compile
+|  \- asm:asm:jar:1.5.3:compile
++- commons-dbcp:commons-dbcp:jar:1.2.2:compile
+|  \- commons-pool:commons-pool:jar:1.3:compile
++- ibm:db2jcc:jar:1.0:compile
++- org.easymock:easymock:jar:2.5:test (scope not updated to compile)
++- org.springframework.security:spring-security-core:jar:2.0.5.RELEASE:compile
+|  +- (org.springframework:spring-core:jar:2.0.8:compile - omitted for conflict with 2.5.6)
+|  +- (org.springframework:spring-context:jar:2.0.8:compile - omitted for conflict with 2.5.6)
+|  +- (org.springframework:spring-aop:jar:2.0.8:compile - omitted for conflict with 2.5.6)
+|  +- org.springframework:spring-support:jar:2.0.8:runtime
+|  |  +- (aopalliance:aopalliance:jar:1.0:runtime - omitted for duplicate)
+|  |  +- (commons-logging:commons-logging:jar:1.1:runtime - omitted for conflict with 1.1.1)
+|  |  +- (org.springframework:spring-beans:jar:2.0.8:runtime - omitted for conflict with 2.5.6.SEC01)
+|  |  +- (org.springframework:spring-context:jar:2.0.8:runtime - omitted for conflict with 2.5.6)
+|  |  \- (org.springframework:spring-core:jar:2.0.8:runtime - omitted for conflict with 2.5.6)
+|  +- commons-logging:commons-logging:jar:1.1.1:compile
+|  +- (commons-codec:commons-codec:jar:1.3:compile - omitted for conflict with 1.4)
+|  \- commons-collections:commons-collections:jar:3.2:compile
++- org.springframework.ldap:spring-ldap:jar:1.2.1:compile
+|  +- (commons-logging:commons-logging:jar:1.0.4:compile - omitted for conflict with 1.1.1)
+|  +- (commons-lang:commons-lang:jar:2.1:compile - omitted for conflict with 2.4)
+|  +- (org.springframework:spring-beans:jar:2.0.6:compile - omitted for conflict with 2.5.6.SEC01)
+|  \- (org.springframework:spring-core:jar:2.0.6:compile - omitted for conflict with 2.5.6)
++- org.springframework:spring-test:jar:2.5.6:test
+|  +- (commons-logging:commons-logging:jar:1.1.1:test - omitted for duplicate)
+|  \- (junit:junit:jar:3.8.1:test - omitted for conflict with 4.4)
+\- log4j:log4j:jar:1.2.15:compile
