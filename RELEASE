@@ -1,6 +1,10 @@
 This file constains some information about
 what is new in each release.
 
+Version 1.0-RC3:
+    * fixed parse-bug when module-pom-dep had duplicate error
+    * improved logging of used import/export settings
+    * added missing configure-tag in example in README-file
 
 Version 1.0-RC2:
     * Added include/exclude patterns 
