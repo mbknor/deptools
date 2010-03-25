@@ -1,5 +1,6 @@
 package deptools.plugin.scala.parser
 
+import filter.DependencyFilterIncludeExcludeImpl
 import org.junit.Test
 import deptools.plugin.scala.utils.{MyLogger, File2QueueReader}
 import java.lang.String
@@ -47,6 +48,17 @@ class DepTreeOutputParserTest {
     val filename = "src/test/resources/dependency_tree3.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
+  }
+
+  @Test{ val expected = classOf[ MojoFailureException] }
+  def testParsing5() {
+    val filename = "src/test/resources/dependency_tree4.txt"
+    println("testing " + filename)
+
+    val dependencyFilter = new DependencyFilterIncludeExcludeImpl(null, ".*slf4j.*|.*easymock.*")
+
+
+    new DepTreeOutputParser(dependencyFilter, MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
 }

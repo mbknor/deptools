@@ -154,11 +154,24 @@ class DepTreeOutputParser(
     val okArtifactExpression = (artifactExpressionPart).r
     val errorArtifactExpression = ("\\("+artifactExpressionPart+" - (.+)\\)").r
     val duplicateArtifactExpression = """\(.+ - omitted for duplicate\)""".r
-
+    var activeProjectArtifactExpression = ("""\(?active project artifact:""").r
 
 
     depString match {
-      case "active project artifact:" => return handleActiveProjectArtifact(linesLeft)
+
+    /**
+     * If the 'active project artifact' is omitted or have any other error,
+     * the dependency:tree output could look like this (with the start parantece..):
+|  +- (active project artifact:
+	      artifact = com.company.nlp.SomeSystem:SomeSystemGatewayModel:jar:1.11.1-SNAPSHOT:compile;
+	      project: MavenProject: com.company.nlp.SomeSystem:SomeSystemGatewayModel:1.11.1-SNAPSHOT @ /home/morten/projects/SomeSystemGateway-parent/SomeSystemGatewayModel/pom.xml - omitted for duplicate)
+
+      Must match with this optional paranthese, but we can ignore the errors
+      since we can assume that all paren-pom-and-modules-project-structure
+      uses the same version...
+     */
+
+      case activeProjectArtifactExpression() => return handleActiveProjectArtifact(linesLeft)
       case errorArtifactExpression( gid, aid, t, v, scope, errorMsg ) => {
         if( ignoreErrors ) return null
         
