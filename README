@@ -64,8 +64,10 @@ you can do it like this:
                     Use these optional settings to include and/or include
                     dependencies from the check:
 
-                    <includePattern> a valid regular expression </includePattern>
-                    <excludePattern> a valid regular expression </excludePattern>
+                    <configuration>
+                        <includePattern> a valid regular expression </includePattern>
+                        <excludePattern> a valid regular expression </excludePattern>
+                    </configuration>
 
                     The pattern is matched against the string "groupId:artifactId" for
                     all dependencies in the dependency-path.
