@@ -3,7 +3,7 @@
     <parent>
         <groupId>deptools.plugin</groupId>
         <artifactId>maven-deptools-plugin-parent</artifactId>
-        <version>1.0-RC4-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <groupId>deptools.plugin</groupId>
