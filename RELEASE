@@ -1,6 +1,15 @@
 This file constains some information about
 what is new in each release.
 
+Version 1.0:
+    * no changes.
+      Plugin has work as expected and have been very useful at work for some time.
+      I'm therefor releasing it as version 1.0
+
+
+Version 1.0-RC4:
+    * added missing test-file
+
 Version 1.0-RC3:
     * fixed parse-bug when module-pom-dep had duplicate error
     * improved logging of used import/export settings
