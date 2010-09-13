@@ -23,6 +23,10 @@ inhouse api’s and projects..
 
 The plugin is written in Scala
 
+
+For example-maven-project showing the problem and the pluing, have a look here:
+http://github.com/mbknor/deptools/tree/master/test/
+
 ---------------------------------------
 
 If you find a bug or have a feature request, report them here:
@@ -107,6 +111,9 @@ you can do it like this:
 --------------------------------------
 
 The plugin can also be used as a maven-enforcer-plugin rule.
+
+For example-maven-projects showing the problem and the plugin as enforcer-rule, have a look here:
+http://github.com/mbknor/deptools/tree/master/test/enforcer-tests/
 
 This is done like like this:
 
