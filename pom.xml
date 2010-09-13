@@ -11,6 +11,7 @@
     <modules>
         <module>maven-deptools-plugin</module>
         <module>maven-deptools-plugin-scala</module>
+        <module>enforcer-rule</module>
 
     </modules>
 
