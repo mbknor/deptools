@@ -1,5 +1,9 @@
 Maven deptools plugin
 
+* Now also as an enforcer-plugin rule *
+  (See description at the bottom of this README)
+
+
 ---------------------------------------
 Maven 2 plugin which gives build error if maven resolves transient dependencies
 in such a way that the none-newest version is chosen.
@@ -98,4 +102,43 @@ you can do it like this:
             <url>http://github.com/mbknor/mbk_mvn_repo/raw/master/</url>
         </pluginRepository>
     </pluginRepositories>
+
+
+--------------------------------------
+
+The plugin can also be used as a maven-enforcer-plugin rule.
+
+This is done like like this:
+
+    <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <dependencies>
+            <dependency>
+                <groupId>deptools.plugin</groupId>
+                <artifactId>enforcer-rule</artifactId>
+                <version>1.1-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+
+        <configuration>
+            <rules>
+                <requireMavenVersion>
+                    <version>2.0.6</version>
+                </requireMavenVersion>
+                <myCustomRule implementation="deptools.plugin.enforcerrule.DeptoolsEnforcerRule">
+                    <includePattern>com.kjetland:.+</includePattern>
+                    <excludePattern>.*commons-logging.*</excludePattern>
+                </myCustomRule>
+
+            </rules>
+        </configuration>
+
+    </plugin>
+
+
+To invoke the deptools-plugin as an enforcer plugin, execute this on the command-line:
+
+mvn package enforcer:enforce
+
 
