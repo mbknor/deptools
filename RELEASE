@@ -1,6 +1,9 @@
 This file constains some information about
 what is new in each release.
 
+Version 1.1-SNAPSHOT:
+    * Added support for maven-enforcer-plugin rule
+
 Version 1.0:
     * no changes.
       Plugin has work as expected and have been very useful at work for some time.
