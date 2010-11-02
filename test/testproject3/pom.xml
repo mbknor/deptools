@@ -29,7 +29,7 @@
             <plugin>
                 <groupId>deptools.plugin</groupId>
                 <artifactId>maven-deptools-plugin</artifactId>
-                <!--<version>1.0-SNAPSHOT</version>-->
+                <version>1.1</version>
                 <executions>
                     <execution>
                         <phase>compile</phase>
@@ -41,6 +41,15 @@
             </plugin>
         </plugins>
     </build>
+
+    <pluginRepositories>
+    
+            <pluginRepository>
+                <id>mbk_mvn_repo</id>
+                <name>mbk_mvn_repo</name>
+                <url>http://github.com/mbknor/mbk_mvn_repo/raw/master/</url>
+            </pluginRepository>
+    </pluginRepositories>
 
 
 </project>

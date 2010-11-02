@@ -31,4 +31,14 @@
         </plugins>
     </build>
 
+    <pluginRepositories>
+    
+            <pluginRepository>
+                <id>mbk_mvn_repo</id>
+                <name>mbk_mvn_repo</name>
+                <url>http://github.com/mbknor/mbk_mvn_repo/raw/master/</url>
+            </pluginRepository>
+    </pluginRepositories>
+
+
 </project>
