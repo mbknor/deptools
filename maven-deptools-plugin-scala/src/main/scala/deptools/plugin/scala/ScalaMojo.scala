@@ -9,6 +9,14 @@ import parser.filter.DependencyFilterIncludeExcludeImpl
 import parser.{DepTreeOutputParser}
 import utils.{MyLogger, File2QueueReader}
 import java.lang.String
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactCollector;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.plugin.dependency.TreeMojo
+import org.apache.maven.shared.dependency.tree.DependencyNode
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,14 +43,22 @@ abstract class ScalaMojo extends AbstractMojo {
   def getExcludePattern : String
 
 
+  def getLocalRepository : ArtifactRepository 
+  def getArtifactFactory : ArtifactFactory
+  def getArtifactMetadataSource : ArtifactMetadataSource
+  def getArtifactCollector : ArtifactCollector
+  def getDependencyTreeBuilder : DependencyTreeBuilder
+
+
   override def getLog = {
     super.getLog
   }
 
   def execute  {
+	
+	getLog().info("DependencyTreeBuilder: " + getDependencyTreeBuilder)
 
-    executeDepTree()
-    val lines = File2QueueReader.readFile( outputFilename )
+    val lines = retrieveDependencyLines()
 
     object MyMojoLogger extends AnyRef with MyLogger{
       def debug(msg: String) {
@@ -66,6 +82,67 @@ abstract class ScalaMojo extends AbstractMojo {
 
 
     return
+  }
+
+  def retrieveDependencyLines() : Queue[String] = {
+
+	val artifactFilter : ArtifactFilter = null
+
+	//build the dependency tree the same way as done in maven-dependency-plugin
+	val rootNode : DependencyNode =
+	    getDependencyTreeBuilder.buildDependencyTree( getProject, getLocalRepository, getArtifactFactory,
+	                                               getArtifactMetadataSource, artifactFilter, getArtifactCollector )
+	//now we must convert the tree into string
+	val lines = convertDependencyNodeToString( rootNode )
+	return lines
+  }
+
+  /* To simulate the text output from maven-dependency-plugin
+ 	 we must call a private method (TreeMojo.serialiseDependencyTree) in the maven-dependency-plugin
+  */
+  def convertDependencyNodeToString( rootNode : DependencyNode ) : Queue[String] = {
+	
+	val treeMojo = new TreeMojo
+	
+	//we need to set the private field 'verbose' to true
+	val verboseField = treeMojo.getClass.getDeclaredField("verbose")
+	//make it accessable
+	verboseField.setAccessible( true )
+	//set its value
+	verboseField.setBoolean( treeMojo, true)
+	
+	//find the method..
+	val serialiseDependencyTreeMethod = treeMojo.getClass.getDeclaredMethod("serialiseDependencyTree", rootNode.getClass)
+		
+	//invoke the private method
+	//must first make the private method accesable
+	serialiseDependencyTreeMethod.setAccessible(true)
+	val stringOutput : String = serialiseDependencyTreeMethod.invoke( treeMojo, rootNode ).toString
+	
+	//getLog().info("stringOutput: " + stringOutput) 
+	
+	//must convert the string into Queue[String]
+	
+	val lines = stringOutput.split("\\n")
+	
+	//println(">")
+	//lines.foreach( println(_) )
+	//println("<")
+	
+	val linesQueue = new Queue[String]
+	//must add 3 spaces in front of each line to make the output the same as the maven-dependency-plugin writes to file..
+	linesQueue ++= lines
+	
+	//getLog().info("linesQueue: " + linesQueue.size) 
+	
+	return linesQueue
+  }
+
+
+  def retrieveDependencyLinesOld() : Queue[String] = {
+	executeDepTree()
+    val lines = File2QueueReader.readFile( outputFilename )
+	return lines
   }
 
   def fixEmptyString( str : String ) : String = {

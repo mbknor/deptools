@@ -4,6 +4,12 @@ import deptools.plugin.scala.ScalaMojo;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.plugin.PluginManager;
 import org.apache.maven.project.MavenProject;
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactCollector;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
+import org.apache.maven.artifact.factory.ArtifactFactory;
 
 /**
  * Goal which touches a timestamp file.
@@ -95,6 +101,53 @@ public class MyMojo2
     protected String excludePattern;
 
 
+	/**
+	* The artifact repository to use.
+	* 
+	* @parameter expression="${localRepository}"
+	* @required
+	* @readonly
+	*/
+	private ArtifactRepository localRepository;
+
+	/**
+	* The artifact factory to use.
+	* 
+	* @component
+	* @required
+	* @readonly
+	*/
+	private ArtifactFactory artifactFactory;
+
+	/**
+	* The artifact metadata source to use.
+	* 
+	* @component
+	* @required
+	* @readonly
+	*/
+	private ArtifactMetadataSource artifactMetadataSource;
+
+	/**
+	* The artifact collector to use.
+	* 
+	* @component
+	* @required
+	* @readonly
+	*/
+	private ArtifactCollector artifactCollector;
+
+
+	/**
+     * The dependency tree builder to use.
+     * 
+     * @component
+     * @required
+     * @readonly
+     */
+    private DependencyTreeBuilder dependencyTreeBuilder;
+
+
     @Override
     public MavenProject getProject() {
         return project;
@@ -148,4 +201,30 @@ public class MyMojo2
     public void setIncludePattern(String includePattern) {
         this.includePattern = includePattern;
     }
+
+	@Override
+	public ArtifactRepository getLocalRepository() {
+		return localRepository;
+	}
+	
+	@Override
+	public ArtifactFactory getArtifactFactory() {
+		return artifactFactory;
+	}
+	
+	@Override
+	public ArtifactMetadataSource getArtifactMetadataSource() {
+		return artifactMetadataSource;
+	}
+	
+	@Override
+	public ArtifactCollector getArtifactCollector() {
+		return artifactCollector;
+	}
+
+	@Override
+	public DependencyTreeBuilder getDependencyTreeBuilder() {
+		return dependencyTreeBuilder;
+	}
+
 }

@@ -10,6 +10,7 @@ import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluationException;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
+import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
 
 /**
  * Created by IntelliJ IDEA.
@@ -115,4 +116,11 @@ public class DeptoolsEnforcerRule extends ScalaMojo implements EnforcerRule {
     public Log getLog() {
         return _logger;
     }
+
+	@Override
+	public DependencyTreeBuilder getDependencyTreeBuilder() {
+		throw new java.lang.RuntimeException("Not implemepted yet");
+	}
+
+
 }
