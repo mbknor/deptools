@@ -1,4 +1,4 @@
-Maven deptools plugin
+Maven deptools plugin - Supports Maven 3
 
 * Now also as an enforcer-plugin rule *
   (See description at the bottom of this README)
@@ -19,12 +19,12 @@ version of a referred dependency is selected by mavens dependency resolving.
 It is possible to include/exclude which artifacts should be included in the check.
 
 This will make it possible for us to check dependency resolving for all
-inhouse api’s and projects..
+inhouse APIs and projects..
 
 The plugin is written in Scala
 
 
-For example-maven-project showing the problem and the pluing, have a look here:
+For example-maven-project showing the problem and the pluging, have a look here:
 http://github.com/mbknor/deptools/tree/master/test/
 
 ---------------------------------------

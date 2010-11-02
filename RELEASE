@@ -1,6 +1,10 @@
 This file constains some information about
 what is new in each release.
 
+Version 1.1:
+	* Added maven3 support
+		* removed dependency to org.twdata.maven.mojoexecutor.MojoExecutor and its repository
+
 Version 1.1-SNAPSHOT:
     * Added support for maven-enforcer-plugin rule
 
