@@ -11,6 +11,11 @@ import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.configurator.expression.ExpressionEvaluationException;
 import org.codehaus.plexus.component.repository.exception.ComponentLookupException;
 import org.apache.maven.shared.dependency.tree.DependencyTreeBuilder;
+import org.apache.maven.artifact.repository.ArtifactRepository;
+import org.apache.maven.artifact.resolver.ArtifactCollector;
+import org.apache.maven.artifact.resolver.filter.ArtifactFilter;
+import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
+import org.apache.maven.artifact.factory.ArtifactFactory;
 
 /**
  * Created by IntelliJ IDEA.
@@ -29,10 +34,17 @@ public class DeptoolsEnforcerRule extends ScalaMojo implements EnforcerRule {
     private String _buildDir = null;
     private PluginManager _pluginManager = null;
     private Log _logger = null;
+	private ArtifactRepository _localRepository;
+	private ArtifactFactory _artifactFactory;
+	private ArtifactMetadataSource _artifactMetadataSource;
+	private ArtifactCollector _artifactCollector;
+    private DependencyTreeBuilder _dependencyTreeBuilder;
 
     //configurable propertied
     private String includePattern = null;
     private String excludePattern = null;
+
+
 
 
     public void execute(EnforcerRuleHelper helper) throws EnforcerRuleException {
@@ -46,6 +58,12 @@ public class DeptoolsEnforcerRule extends ScalaMojo implements EnforcerRule {
             _session = (MavenSession) helper.evaluate( "${session}" );
             _buildDir = (String) helper.evaluate( "${project.build.directory}" );
             _pluginManager =  (PluginManager)helper.getComponent(PluginManager.class);
+			_localRepository = (ArtifactRepository) helper.evaluate( "${localRepository}");
+			_artifactFactory = (ArtifactFactory) helper.getComponent(ArtifactFactory.class);
+			_artifactMetadataSource = (ArtifactMetadataSource) helper.getComponent(ArtifactMetadataSource.class);
+			_artifactCollector = (ArtifactCollector) helper.getComponent(ArtifactCollector.class);
+			_dependencyTreeBuilder = (DependencyTreeBuilder) helper.getComponent(DependencyTreeBuilder.class);
+			
         }catch ( ComponentLookupException e )
         {
             throw new EnforcerRuleException( "Unable to lookup a component " + e.getLocalizedMessage(), e );
@@ -118,8 +136,28 @@ public class DeptoolsEnforcerRule extends ScalaMojo implements EnforcerRule {
     }
 
 	@Override
+	public ArtifactRepository getLocalRepository() {
+		return _localRepository;
+	}
+	
+	@Override
+	public ArtifactFactory getArtifactFactory() {
+		return _artifactFactory;
+	}
+	
+	@Override
+	public ArtifactMetadataSource getArtifactMetadataSource() {
+		return _artifactMetadataSource;
+	}
+	
+	@Override
+	public ArtifactCollector getArtifactCollector() {
+		return _artifactCollector;
+	}
+
+	@Override
 	public DependencyTreeBuilder getDependencyTreeBuilder() {
-		throw new java.lang.RuntimeException("Not implemepted yet");
+		return _dependencyTreeBuilder;
 	}
 
 
