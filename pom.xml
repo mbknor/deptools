@@ -3,7 +3,7 @@
     <groupId>deptools.plugin</groupId>
     <artifactId>maven-deptools-plugin-parent</artifactId>
     <packaging>pom</packaging>
-    <version>1.1</version>
+    <version>1.2-SNAPSHOT</version>
     <name>maven-deptools-plugin parent</name>
     <url>http://maven.apache.org</url>
 
