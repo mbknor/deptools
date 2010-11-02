@@ -5,7 +5,7 @@ Maven deptools plugin - Supports Maven 3
 
 
 ---------------------------------------
-Maven 2 plugin which gives build error if maven resolves transient dependencies
+Maven 2 and Maven 3 plugin which gives build error if maven resolves transient dependencies
 in such a way that the none-newest version is chosen.
 
 At work we have all kinds of different dependencies problems related to transient
