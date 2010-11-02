@@ -3,7 +3,6 @@ package deptools.plugin.scala
 import org.apache.maven.project.MavenProject
 import org.apache.maven.execution.MavenSession
 import org.apache.maven.plugin.{PluginManager, AbstractMojo}
-import org.twdata.maven.mojoexecutor.MojoExecutor._
 import collection.mutable.{Queue, ListBuffer}
 import parser.filter.DependencyFilterIncludeExcludeImpl
 import parser.{DepTreeOutputParser}
@@ -27,9 +26,6 @@ import org.apache.maven.shared.dependency.tree.DependencyNode
  */
 
 abstract class ScalaMojo extends AbstractMojo {
-
-  private val depTreeFilename = "/dependency_tree/dependency_tree.txt"
-
 
   def getProject: MavenProject
   def getSession: MavenSession
@@ -56,8 +52,6 @@ abstract class ScalaMojo extends AbstractMojo {
 
   def execute  {
 	
-	getLog().info("DependencyTreeBuilder: " + getDependencyTreeBuilder)
-
     val lines = retrieveDependencyLines()
 
     object MyMojoLogger extends AnyRef with MyLogger{
@@ -119,30 +113,13 @@ abstract class ScalaMojo extends AbstractMojo {
 	serialiseDependencyTreeMethod.setAccessible(true)
 	val stringOutput : String = serialiseDependencyTreeMethod.invoke( treeMojo, rootNode ).toString
 	
-	//getLog().info("stringOutput: " + stringOutput) 
-	
 	//must convert the string into Queue[String]
-	
 	val lines = stringOutput.split("\\n")
 	
-	//println(">")
-	//lines.foreach( println(_) )
-	//println("<")
-	
 	val linesQueue = new Queue[String]
-	//must add 3 spaces in front of each line to make the output the same as the maven-dependency-plugin writes to file..
 	linesQueue ++= lines
 	
-	//getLog().info("linesQueue: " + linesQueue.size) 
-	
 	return linesQueue
-  }
-
-
-  def retrieveDependencyLinesOld() : Queue[String] = {
-	executeDepTree()
-    val lines = File2QueueReader.readFile( outputFilename )
-	return lines
   }
 
   def fixEmptyString( str : String ) : String = {
@@ -153,32 +130,4 @@ abstract class ScalaMojo extends AbstractMojo {
     }
   }
 
-
-  def outputFilename = getBuildDir + depTreeFilename
-
-
-
-  def executeDepTree() {
-    val pm = getPluginManager
-    
-    executeMojo(
-      plugin(
-        groupId("org.apache.maven.plugins"),
-        artifactId("maven-dependency-plugin"),
-        version("2.0")
-        ),
-      goal("tree"),
-      configuration(
-        element(name("outputFile"), "${project.build.directory}" + depTreeFilename),
-        element(name("verbose"), "true")
-        )
-      ,
-      executionEnvironment(
-        getProject,
-        getSession,
-        pm
-        )
-      )
-
-  }
 }

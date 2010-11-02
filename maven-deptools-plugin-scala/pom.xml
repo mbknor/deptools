@@ -22,11 +22,6 @@
             <name>Scala-Tools Maven2 Repository</name>
             <url>http://scala-tools.org/repo-releases</url>
         </repository>
-        <repository>
-            <id>mojo-executor-repository</id>
-            <name>Mojo Executor Repository for Maven</name>
-            <url>http://twdata-m2-repository.googlecode.com/svn/</url>
-        </repository>
     </repositories>
 
     <pluginRepositories>
@@ -70,13 +65,6 @@
             <version>2.5.2</version>
             <scope>test</scope>
         </dependency>
-
-        <dependency>
-            <groupId>org.twdata.maven</groupId>
-            <artifactId>mojo-executor</artifactId>
-            <version>0.1</version>
-        </dependency>
-
 		<dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-dependency-plugin</artifactId>
