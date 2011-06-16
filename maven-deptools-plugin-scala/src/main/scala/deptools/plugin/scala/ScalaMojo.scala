@@ -114,7 +114,7 @@ abstract class ScalaMojo extends AbstractMojo {
 	val stringOutput : String = serialiseDependencyTreeMethod.invoke( treeMojo, rootNode ).toString
 	
 	//must convert the string into Queue[String]
-	val lines = stringOutput.split("\\n")
+	val lines = stringOutput.split("\\r?\\n")
 	
 	val linesQueue = new Queue[String]
 	linesQueue ++= lines
