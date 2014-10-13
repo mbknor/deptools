@@ -1,4 +1,5 @@
 Maven deptools plugin - Supports Maven 3
+===========================================
 
 * Now also as an enforcer-plugin rule *
   (See description at the bottom of this README)
@@ -25,12 +26,14 @@ The plugin is written in Scala
 
 
 For example-maven-project showing the problem and the pluging, have a look here:
-http://github.com/mbknor/deptools/tree/master/test/
+
+    http://github.com/mbknor/deptools/tree/master/test/
 
 ---------------------------------------
 
 If you find a bug or have a feature request, report them here:
-http://github.com/mbknor/deptools/issues
+
+    http://github.com/mbknor/deptools/issues
 
 ---------------------------------------
 
@@ -41,7 +44,7 @@ The plugin can be found in this repository:
         <pluginRepository>
             <id>mbk_mvn_repo</id>
             <name>mbk_mvn_repo</name>
-            <url>https://raw.github.com/mbknor/mbk_mvn_repo/master</url>
+            <url>https://raw.githubusercontent.com/mbknor/mbknor.github.com/master/m2repo/releases</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -51,11 +54,12 @@ The plugin can be found in this repository:
 
 To run the plugin from the command line:
 
-mvn deptools.plugin:maven-deptools-plugin:version-checker
+    mvn deptools.plugin:maven-deptools-plugin:version-checker
 
 To include/exclude dependencies use one/both of these settings:
--DexcludePattern=<regular expression>
--DincludePattern=<regular expression>
+
+    -DexcludePattern=<regular expression>
+    -DincludePattern=<regular expression>
 
 ---------------------------------------
 
@@ -103,7 +107,7 @@ you can do it like this:
         <pluginRepository>
             <id>mbk_mvn_repo</id>
             <name>mbk_mvn_repo</name>
-            <url>https://raw.github.com/mbknor/mbk_mvn_repo/master</url>
+            <url>https://raw.githubusercontent.com/mbknor/mbknor.github.com/master/m2repo/releases</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -113,7 +117,8 @@ you can do it like this:
 The plugin can also be used as a maven-enforcer-plugin rule.
 
 For example-maven-projects showing the problem and the plugin as enforcer-rule, have a look here:
-http://github.com/mbknor/deptools/tree/master/test/enforcer-tests/
+
+    http://github.com/mbknor/deptools/tree/master/test/enforcer-tests/
 
 This is done like like this:
 
@@ -146,6 +151,6 @@ This is done like like this:
 
 To invoke the deptools-plugin as an enforcer plugin, execute this on the command-line:
 
-mvn package enforcer:enforce
+    mvn package enforcer:enforce
 
 

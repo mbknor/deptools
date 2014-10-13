@@ -22,14 +22,14 @@ class DepTreeOutputParserTest {
     def error(msg: String) = println("ERROR: "+ msg)
   }
 
-  @Test{ val expected = classOf[ MojoFailureException] }
+  @Test( expected = classOf[ MojoFailureException] )
   def testParsing() {
     val filename = "src/test/resources/dep_tree2.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
-  @Test{ val expected = classOf[ MojoFailureException] }
+  @Test( expected = classOf[ MojoFailureException] )
   def testParsing2() {
     val filename = "src/test/resources/dependency_tree.txt"
     println("testing " + filename)
@@ -43,14 +43,14 @@ class DepTreeOutputParserTest {
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
-  @Test{ val expected = classOf[ MojoFailureException] }
+  @Test( expected = classOf[ MojoFailureException] )
   def testParsing4() {
     val filename = "src/test/resources/dependency_tree3.txt"
     println("testing " + filename)
     new DepTreeOutputParser(MyTestLogger).parse(File2QueueReader.readFile(filename))
   }
 
-  @Test{ val expected = classOf[ MojoFailureException] }
+  @Test( expected = classOf[ MojoFailureException] )
   def testParsing5() {
     val filename = "src/test/resources/dependency_tree4.txt"
     println("testing " + filename)

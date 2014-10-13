@@ -47,7 +47,7 @@
             <pluginRepository>
                 <id>mbk_mvn_repo</id>
                 <name>mbk_mvn_repo</name>
-                <url>https://raw.github.com/mbknor/mbk_mvn_repo/master/</url>
+                <url>https://raw.githubusercontent.com/mbknor/mbknor.github.com/master/m2repo/releases/</url>
             </pluginRepository>
     </pluginRepositories>
 

@@ -77,7 +77,7 @@ class DepTreeOutputParser(
     line match{
       case artifactExpression(gid, aid, t, v) => {
         val rootDependency = new Dependency(gid, aid, t, v, "compile")
-        return new collection.immutable.Queue(rootDependency)
+        return collection.immutable.Queue(rootDependency)
       }
       case _ => throw new Exception("Error parsing first line: '"+line+"'");
     }

@@ -9,7 +9,6 @@
     <groupId>deptools.plugin</groupId>
     <artifactId>enforcer-rule</artifactId>
     <packaging>jar</packaging>
-    <name>maven-deptools-plugin Maven Mojo</name>
     <url>http://maven.apache.org</url>
 
     <properties>

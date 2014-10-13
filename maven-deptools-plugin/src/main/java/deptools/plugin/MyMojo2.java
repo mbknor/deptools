@@ -148,7 +148,6 @@ public class MyMojo2
     private DependencyTreeBuilder dependencyTreeBuilder;
 
 
-    @Override
     public MavenProject getProject() {
         return project;
     }
@@ -157,7 +156,6 @@ public class MyMojo2
         this.project = project;
     }
 
-    @Override
     public String getBuildDir() {
         return buildDir;
     }
@@ -166,7 +164,6 @@ public class MyMojo2
         this.buildDir = buildDir;
     }
 
-    @Override
     public PluginManager getPluginManager() {
         return pluginManager;
     }
@@ -175,7 +172,6 @@ public class MyMojo2
         this.pluginManager = pluginManager;
     }
 
-    @Override
     public MavenSession getSession() {
         return session;
     }
@@ -184,7 +180,6 @@ public class MyMojo2
         this.session = session;
     }
 
-    @Override
     public String getExcludePattern() {
         return excludePattern;
     }
@@ -193,7 +188,6 @@ public class MyMojo2
         this.excludePattern = excludePattern;
     }
 
-    @Override
     public String getIncludePattern() {
         return includePattern;
     }
@@ -202,27 +196,22 @@ public class MyMojo2
         this.includePattern = includePattern;
     }
 
-	@Override
 	public ArtifactRepository getLocalRepository() {
 		return localRepository;
 	}
 	
-	@Override
 	public ArtifactFactory getArtifactFactory() {
 		return artifactFactory;
 	}
 	
-	@Override
 	public ArtifactMetadataSource getArtifactMetadataSource() {
 		return artifactMetadataSource;
 	}
 	
-	@Override
 	public ArtifactCollector getArtifactCollector() {
 		return artifactCollector;
 	}
 
-	@Override
 	public DependencyTreeBuilder getDependencyTreeBuilder() {
 		return dependencyTreeBuilder;
 	}

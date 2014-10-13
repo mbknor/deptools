@@ -14,33 +14,20 @@
 		<module>enforcer-rule</module>
     </modules>
 
-    <scm>
-        <connection>scm:git:file://localhost/Users/mortenkjetland/projects/deptools</connection>
-        <url>scm:git:git://github.com/mbknor/deptools.git</url>
-    </scm>
-
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.0</version>
-                <configuration>
-                </configuration>
-            </plugin>
-
-        </plugins>
-
-    </build>
+    <repositories>
+        <repository>
+            <id>mbknor</id>
+            <name>mbknor</name>
+            <url>https://raw.githubusercontent.com/mbknor/mbknor.github.com/master/m2repo/releases</url>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <repository>
             <id>mbk_mvn_repo</id>
             <layout>default</layout>
             <name>mbk_mvn_repo</name>
-            <url>file://localhost/Users/mortenkjetland/projects/mbk_mvn_repo</url>
+            <url>file:///projects/git/mbknor.github.com/m2repo/releases</url>
         </repository>
     </distributionManagement>
-
 </project>
