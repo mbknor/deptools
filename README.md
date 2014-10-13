@@ -1,5 +1,12 @@
-Maven deptools plugin - Supports Maven 3
+Maven deptools plugin
 ===========================================
+
+**Supports Maven 3**
+
+
+Latest version: **1.3**
+
+
 
 * Now also as an enforcer-plugin rule *
   (See description at the bottom of this README)
@@ -72,6 +79,7 @@ you can do it like this:
             <plugin>
                 <groupId>deptools.plugin</groupId>
                 <artifactId>maven-deptools-plugin</artifactId>
+                <version>1.3</version>
                 <!--
                     Use these optional settings to include and/or include
                     dependencies from the check:
@@ -129,7 +137,7 @@ This is done like like this:
             <dependency>
                 <groupId>deptools.plugin</groupId>
                 <artifactId>enforcer-rule</artifactId>
-                <version>1.2</version>
+                <version>1.3</version>
             </dependency>
         </dependencies>
 
