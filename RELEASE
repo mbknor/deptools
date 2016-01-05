@@ -1,6 +1,9 @@
 This file constains some information about
 what is new in each release.
 
+Version 1.4
+    * Fixing #3 - Now listing ALL errors
+
 Version 1.3
     * Fixed it so it still compiles :)
 
