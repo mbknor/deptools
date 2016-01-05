@@ -39,6 +39,7 @@ class DepTreeOutputParser(
         dependencyFilter : DependencyFilter,
         logger: MyLogger) {
 
+  var foundError = false
 
   def this( logger: MyLogger ){
     this( null, logger)
@@ -57,6 +58,10 @@ class DepTreeOutputParser(
 
     //then parse again and check for errors
     parseLines( linesLeft, false )
+
+    if ( foundError ) {
+      throw new MojoFailureException("Found newer dependencies which are omitted in favor of older versions")
+    }
   }
 
   /**
@@ -268,6 +273,8 @@ class DepTreeOutputParser(
           if( dependencyFilter == null || dependencyFilter.matches( dependencyHierarchy.toArray )){
 
             val mainErrorMsg = "Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'"
+
+            logger.info("---->")
             logger.info(mainErrorMsg)
             logger.info("")
             logger.info("Path to omitted dependency:")
@@ -277,8 +284,9 @@ class DepTreeOutputParser(
             printDependencyHierarchy( depPath)
             logger.info("")
 
-            //fail the build
-            throw new MojoFailureException(mainErrorMsg)
+            //fail the build - later
+            foundError = true
+
           }else{
             logger.info("Ignoring omitted error due to filter: Newer dependency '"+lastDep+"' is omitted in favor of an old version '"+dep.version+"'")
           }
